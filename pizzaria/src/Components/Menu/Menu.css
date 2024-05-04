@@ -6,8 +6,8 @@
   
   .header-bottom {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
     background-color: #121618;
     padding: 1.5rem 2rem;
   }
@@ -26,19 +26,37 @@
   .header-title {
     display: flex;
     flex-direction: column;
-    margin-left: 1rem;
+    align-items: center;
   }
   
   .header-title h1 {
     font-size: 1.5rem;
     color: white;
-    margin: 0; 
+    margin: 0;
   }
   
-  .header-title span {
+  .header-title .highlight {
     font-size: 1.5rem;
     color: orange;
-    margin: 0; 
+    margin: 0;
+  }
+  
+  .header-links {
+    display: flex;
+    align-items: center;
+    margin-left: 53.5rem;
+    font-size: 1.2rem;
+  }
+  
+  
+  .header-links a {
+    color: white;
+    text-decoration: none;
+    margin-left: 1rem;
+  }
+  
+  .header-links a.active {
+    color: yellow;
   }
   
   .header-right {
@@ -48,58 +66,19 @@
   
   .header-actions {
     display: flex;
+    align-items: center;
   }
   
-  .header-actions .header-action-button {
+  .header-action-button {
     background-color: transparent;
     border: none;
     color: white;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     cursor: pointer;
+    margin-left: 0.2rem;
   }
   
-  .header-actions .header-action-button:focus {
+  .header-action-button:focus {
     outline: none;
-  }
-  
-  .menu-toggle-container {
-    position: relative;
-    padding-top: 6px;
-  }
-  
-  .menu-toggle {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .menu-bar {
-    width: 25px;
-    height: 3px;
-    background-color: white;
-    margin: 4px 0;
-  }
-  
-  .menu-hamburger {
-    position: absolute;
-    top: calc(100% + 10px);
-    left: 0;
-    background-color: #f7931e;
-    border-radius: 5px;
-    padding: 10px;
-    transform: translateY(0);
-    transition: transform 0.3s ease;
-  }
-  
-  .menu-hamburger a {
-    display: block;
-    color: white;
-    text-decoration: none;
-    padding: 8px 0;
-    transition: background-color 0.3s ease;
-  }
-  
-  .menu-hamburger a:hover {
-    background-color: rgba(255, 255, 255, 0.1);
   }
   

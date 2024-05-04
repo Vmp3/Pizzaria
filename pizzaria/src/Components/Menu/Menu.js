@@ -1,16 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Menu.css";
 import logoPizza from "./pizza_logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 
 const Menu = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
-
   return (
     <div className="header-container">
       <header className="header-bottom">
@@ -20,32 +14,22 @@ const Menu = () => {
           </div>
           <div className="header-title">
             <h1>Pizza</h1>
-            <span>Gurizada</span>
+            <span className="highlight">Gurizada</span>
+          </div>
+          <div className="header-links">
+            <a href="/home" className="active">Home</a>
+            <a href="/menu">Menu</a>
+            <a href="/sobre">Sobre</a>
+            <a href="/contato">Contato</a>
           </div>
         </div>
         <div className="header-right">
-          <div className="header-actions">
-            <button className="header-action-button">
-              <FontAwesomeIcon icon={faUser} />
-            </button>
-            <button className="header-action-button">
-              <FontAwesomeIcon icon={faShoppingCart} />
-            </button>
-          </div>
-          <div className="menu-toggle-container">
-            <button className="menu-toggle" onClick={toggleMenu}>
-              <div className="menu-bar"></div>
-              <div className="menu-bar"></div>
-              <div className="menu-bar"></div>
-            </button>
-            {menuOpen && (
-              <nav className="menu-hamburger">
-                <a href="/inicio">Início</a>
-                <a href="/sobre">Sobre</a>
-                <a href="/contato">Contato</a>
-              </nav>
-            )}
-          </div>
+          <button className="header-action-button">
+            <FontAwesomeIcon icon={faUser} />
+          </button>
+          <button className="header-action-button">
+            <FontAwesomeIcon icon={faShoppingCart} />
+          </button>
         </div>
       </header>
     </div>
