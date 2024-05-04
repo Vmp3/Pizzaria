@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Menu.css";
 import logoPizza from "./pizza_logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 
 const Menu = () => {
+  // Estado para armazenar o link da página atual
+  const [currentPage, setCurrentPage] = useState("");
+
+  // Atualizar o link da página atual com base na URL
+  useEffect(() => {
+    const path = window.location.pathname;
+    setCurrentPage(path);
+  }, []);
+
   return (
     <div className="header-container">
       <header className="header-bottom">
@@ -17,10 +26,18 @@ const Menu = () => {
             <span className="highlight">Gurizada</span>
           </div>
           <div className="header-links">
-            <a href="/home" className="active">Home</a>
-            <a href="/menu">Menu</a>
-            <a href="/sobre">Sobre</a>
-            <a href="/contato">Contato</a>
+            <a href="/home" className={currentPage === "/home" ? "active" : ""}>
+              Home
+            </a>
+            <a href="/menu" className={currentPage === "/menu" ? "active" : ""}>
+              Menu
+            </a>
+            <a href="/sobre" className={currentPage === "/sobre" ? "active" : ""}>
+              Sobre
+            </a>
+            <a href="/contato" className={currentPage === "/contato" ? "active" : ""}>
+              Contato
+            </a>
           </div>
         </div>
         <div className="header-right">
