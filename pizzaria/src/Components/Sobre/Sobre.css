@@ -1,0 +1,30 @@
+.about-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-image: url('cimento.jpg'); /* Substitua 'caminho/para/sua/imagem.jpg' pelo caminho da sua imagem */
+    background-size: cover; /* Para garantir que a imagem cubra todo o container */
+    background-position: center; /* Para centralizar a imagem */
+}
+
+
+.image-container {
+    flex: 1;
+    margin-right: 20px; /* Espaçamento entre a imagem e o texto */
+}
+
+.-image {
+    width: 100%;
+    height: auto;
+}
+
+.text-container {
+    flex: 1;
+}
+
+.text-container p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: white; /* Cor do texto */
+}
