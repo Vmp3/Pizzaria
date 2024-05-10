@@ -5,26 +5,23 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 
 const Menu = () => {
-  // Estado para armazenar o link da página atual
+
   const [currentPage, setCurrentPage] = useState("");
 
-  // Atualizar o link da página atual com base na URL
   useEffect(() => {
     const path = window.location.pathname;
     setCurrentPage(path);
 
-    // Remove o identificador de âncora da URL se existir
     if (window.location.hash === "#sobre") {
-      window.history.replaceState(null, null, window.location.pathname); // Remove o identificador de âncora
+      window.history.replaceState(null, null, window.location.pathname);
     }
   }, []);
 
-  // Manipular o clique do link "Sobre"
   const handleSobreClick = (event) => {
-    event.preventDefault(); // Evita o comportamento padrão de redirecionamento
+    event.preventDefault();
     const sobreSection = document.getElementById("sobre");
     if (sobreSection) {
-      sobreSection.scrollIntoView({ behavior: "smooth" }); // Rola até a seção "Sobre" suavemente
+      sobreSection.scrollIntoView({ behavior: "smooth" });
     }
   };
 
