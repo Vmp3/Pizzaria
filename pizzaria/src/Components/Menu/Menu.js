@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 
 const Menu = () => {
-
   const [currentPage, setCurrentPage] = useState("");
 
   useEffect(() => {
@@ -13,6 +12,10 @@ const Menu = () => {
     setCurrentPage(path);
 
     if (window.location.hash === "#sobre") {
+      window.history.replaceState(null, null, window.location.pathname);
+    }
+
+    if (window.location.hash === "#contato") {
       window.history.replaceState(null, null, window.location.pathname);
     }
   }, []);
@@ -25,13 +28,25 @@ const Menu = () => {
     }
   };
 
+  const handleContatoClick = (event) => {
+    event.preventDefault();
+    const contatoSection = document.getElementById("contato");
+    if (contatoSection) {
+      contatoSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+
   return (
     <div className="header-container">
       <header className="header-bottom">
         <div className="header-left">
           <div className="header-logo">
-            <img src={logoPizza} alt="Logotipo Senac" />
+            <a href="/home">
+              <img src={logoPizza} alt="Logotipo Senac" />
+            </a>
           </div>
+
           <div className="header-title">
             <h1>Pizza</h1>
             <span className="highlight">Gurizada</span>
@@ -43,16 +58,30 @@ const Menu = () => {
             <a href="/menu" className={currentPage === "/menu" ? "active" : ""}>
               Menu
             </a>
-            <a href="/sobre" onClick={handleSobreClick} className={currentPage === "/sobre" ? "active" : ""}>
+            <a
+              href="/sobre"
+              onClick={handleSobreClick}
+              className={currentPage === "/sobre" ? "active" : ""}
+            >
               Sobre
             </a>
-            <a href="/contato" className={currentPage === "/contato" ? "active" : ""}>
+            <a
+              href="/contato"
+              onClick={handleContatoClick}
+              className={currentPage === "/contato" ? "active" : ""}
+            >
               Contato
             </a>
-            <a href="/account" className={currentPage === "/account" ? "active" : ""}>
+            <a
+              href="/account"
+              className={currentPage === "/account" ? "active" : ""}
+            >
               <FontAwesomeIcon icon={faUser} />
             </a>
-            <a href="/carrinho" className={currentPage === "/carrinho" ? "active" : ""}>
+            <a
+              href="/carrinho"
+              className={currentPage === "/carrinho" ? "active" : ""}
+            >
               <FontAwesomeIcon icon={faShoppingCart} />
             </a>
           </div>

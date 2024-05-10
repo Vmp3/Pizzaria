@@ -8,11 +8,8 @@ const Principal = () => {
     if (videoRef.current) {
       videoRef.current
         .play()
-        .then(() => {
-          // Vídeo foi iniciado
-        })
+        .then(() => {})
         .catch((error) => {
-          // O navegador não permitiu a reprodução automática
           console.error("Erro ao iniciar a reprodução automática:", error);
         });
     }
@@ -30,7 +27,9 @@ const Principal = () => {
       <div className="text-overlay">
         <p className="welcome">Welcome</p>
         <h2>Bem-vindo à nossa pizzaria!</h2>
-        <p>Não perca essa chance de ter um belo jantar! Realize seu pedido abaixo</p>
+        <p>
+          Não perca essa chance de ter um belo jantar! Realize seu pedido abaixo
+        </p>
       </div>
     </div>
   );
