@@ -49,15 +49,13 @@ const Menu = () => {
             <a href="/contato" className={currentPage === "/contato" ? "active" : ""}>
               Contato
             </a>
+            <a href="/account" className={currentPage === "/account" ? "active" : ""}>
+              <FontAwesomeIcon icon={faUser} />
+            </a>
+            <a href="/carrinho" className={currentPage === "/carrinho" ? "active" : ""}>
+              <FontAwesomeIcon icon={faShoppingCart} />
+            </a>
           </div>
-        </div>
-        <div className="header-right">
-          <button className="header-action-button">
-            <FontAwesomeIcon icon={faUser} />
-          </button>
-          <button className="header-action-button">
-            <FontAwesomeIcon icon={faShoppingCart} />
-          </button>
         </div>
       </header>
     </div>
