@@ -14,6 +14,15 @@ const Menu = () => {
     setCurrentPage(path);
   }, []);
 
+  // Manipular o clique do link "Sobre"
+  const handleSobreClick = (event) => {
+    event.preventDefault(); // Evita o comportamento padrão de redirecionamento
+    const sobreSection = document.getElementById("sobre");
+    if (sobreSection) {
+      sobreSection.scrollIntoView({ behavior: "smooth" }); // Rola até a seção "Sobre" suavemente
+    }
+  };
+
   return (
     <div className="header-container">
       <header className="header-bottom">
@@ -32,7 +41,7 @@ const Menu = () => {
             <a href="/menu" className={currentPage === "/menu" ? "active" : ""}>
               Menu
             </a>
-            <a href="/sobre" className={currentPage === "/sobre" ? "active" : ""}>
+            <a href="/sobre" onClick={handleSobreClick} className={currentPage === "/sobre" ? "active" : ""}>
               Sobre
             </a>
             <a href="/contato" className={currentPage === "/contato" ? "active" : ""}>
