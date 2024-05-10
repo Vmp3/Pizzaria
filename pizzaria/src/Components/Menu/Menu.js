@@ -12,6 +12,11 @@ const Menu = () => {
   useEffect(() => {
     const path = window.location.pathname;
     setCurrentPage(path);
+
+    // Remove o identificador de âncora da URL se existir
+    if (window.location.hash === "#sobre") {
+      window.history.replaceState(null, null, window.location.pathname); // Remove o identificador de âncora
+    }
   }, []);
 
   // Manipular o clique do link "Sobre"
