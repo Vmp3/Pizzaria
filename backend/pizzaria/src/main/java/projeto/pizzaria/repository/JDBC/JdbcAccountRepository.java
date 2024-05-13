@@ -1,6 +1,6 @@
-package projeto.pizzaria.Repository.JDBC;
+package projeto.pizzaria.repository.JDBC;
 
-import projeto.pizzaria.Repository.AccountRepository;
+import projeto.pizzaria.repository.AccountRepository;
 import projeto.pizzaria.model.AccountRequestDTO;
 import org.springframework.stereotype.Repository;
 

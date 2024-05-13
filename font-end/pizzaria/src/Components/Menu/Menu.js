@@ -1,50 +1,27 @@
+// Em Menu.js
 import React, { useState, useEffect } from "react";
 import "./Menu.css";
 import logoPizza from "./pizza_logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import { Link, useLocation } from 'react-router-dom';
 
 const Menu = () => {
-  const [currentPage, setCurrentPage] = useState("");
+  const location = useLocation();
+  const [currentPage, setCurrentPage] = useState(location.pathname);
 
   useEffect(() => {
-    const path = window.location.pathname;
-    setCurrentPage(path);
-
-    if (window.location.hash === "#sobre") {
-      window.history.replaceState(null, null, window.location.pathname);
-    }
-
-    if (window.location.hash === "#contato") {
-      window.history.replaceState(null, null, window.location.pathname);
-    }
-  }, []);
-
-  const handleSobreClick = (event) => {
-    event.preventDefault();
-    const sobreSection = document.getElementById("sobre");
-    if (sobreSection) {
-      sobreSection.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  const handleContatoClick = (event) => {
-    event.preventDefault();
-    const contatoSection = document.getElementById("contato");
-    if (contatoSection) {
-      contatoSection.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
+    setCurrentPage(location.pathname);
+  }, [location]);
 
   return (
     <div className="header-container">
       <header className="header-bottom">
         <div className="header-left">
           <div className="header-logo">
-            <a href="/home">
+            <Link to="/home">
               <img src={logoPizza} alt="Logotipo Senac" />
-            </a>
+            </Link>
           </div>
 
           <div className="header-title">
@@ -52,38 +29,24 @@ const Menu = () => {
             <span className="highlight">Gurizada</span>
           </div>
           <div className="header-links">
-            <a href="/home" className={currentPage === "/home" ? "active" : ""}>
+            <Link to="/home" className={currentPage === "/home" ? "active" : ""}>
               Home
-            </a>
-            <a href="/menu" className={currentPage === "/menu" ? "active" : ""}>
+            </Link>
+            <Link to="/menu" className={currentPage === "/menu" ? "active" : ""}>
               Menu
-            </a>
-            <a
-              href="/sobre"
-              onClick={handleSobreClick}
-              className={currentPage === "/sobre" ? "active" : ""}
-            >
+            </Link>
+            <Link to="/sobre" className={currentPage === "/sobre" ? "active" : ""}>
               Sobre
-            </a>
-            <a
-              href="/contato"
-              onClick={handleContatoClick}
-              className={currentPage === "/contato" ? "active" : ""}
-            >
+            </Link>
+            <Link to="/contato" className={currentPage === "/contato" ? "active" : ""}>
               Contato
-            </a>
-            <a
-              href="/account"
-              className={currentPage === "/account" ? "active" : ""}
-            >
+            </Link>
+            <Link to="/criar-conta" className={currentPage === "/criar-conta" ? "active" : ""}>
               <FontAwesomeIcon icon={faUser} />
-            </a>
-            <a
-              href="/carrinho"
-              className={currentPage === "/carrinho" ? "active" : ""}
-            >
+            </Link>
+            <Link to="/carrinho" className={currentPage === "/carrinho" ? "active" : ""}>
               <FontAwesomeIcon icon={faShoppingCart} />
-            </a>
+            </Link>
           </div>
         </div>
       </header>

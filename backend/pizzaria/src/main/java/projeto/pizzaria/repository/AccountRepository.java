@@ -1,4 +1,4 @@
-package projeto.pizzaria.Repository;
+package projeto.pizzaria.repository;
 
 import projeto.pizzaria.model.AccountRequestDTO;
 

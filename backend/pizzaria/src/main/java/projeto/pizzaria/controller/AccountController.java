@@ -1,11 +1,16 @@
-package projeto.pizzaria.Controller;
+package projeto.pizzaria.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import projeto.pizzaria.Repository.AccountRepository;
+import projeto.pizzaria.repository.AccountRepository;
 import projeto.pizzaria.model.AccountRequestDTO;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
+
+@CrossOrigin(origins = "*")
+
 
 @RestController
 public class AccountController {
