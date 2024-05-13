@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "./criar-conta.css"; // Importe o arquivo CSS que acabamos de criar
 
 function CriarConta() {
   const [cpf, setCpf] = useState("");
@@ -35,11 +36,11 @@ function CriarConta() {
     const newCep = formatCEP(event.target.value);
     setCep(newCep);
 
-    if (newCep.length === 9) { // Verifica se o CEP tem 9 caracteres incluindo o hífen
+    if (newCep.length === 9) {
       try {
         const response = await axios.get(`https://viacep.com.br/ws/${newCep.replace("-", "")}/json/`);
         const data = response.data;
-        if (!data.erro) { // Verifica se o CEP é válido
+        if (!data.erro) {
           setEndereco(data.logradouro);
         } else {
           setEndereco("");
@@ -70,14 +71,15 @@ function CriarConta() {
   };
 
   return (
-    <div>
+    <div className="criar-conta-container">
       <h2>Criar Conta</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="criar-conta-form">
         <input
           type="text"
           placeholder="CPF"
           value={cpf}
           onChange={handleCpfChange}
+          className="criar-conta-input"
           required
         />
         <input
@@ -85,6 +87,7 @@ function CriarConta() {
           placeholder="Nome"
           value={nome}
           onChange={(e) => setNome(e.target.value)}
+          className="criar-conta-input"
           required
         />
         <input
@@ -93,6 +96,7 @@ function CriarConta() {
           value={cep}
           onChange={handleCepChange}
           maxLength={9}
+          className="criar-conta-input"
           required
         />
         <input
@@ -101,6 +105,7 @@ function CriarConta() {
           value={endereco}
           onChange={(e) => setEndereco(e.target.value)}
           readOnly
+          className="criar-conta-input"
           required
         />
         <input
@@ -108,6 +113,7 @@ function CriarConta() {
           placeholder="Número"
           value={numero}
           onChange={(e) => setNumero(e.target.value)}
+          className="criar-conta-input"
           required
         />
         <input
@@ -115,6 +121,7 @@ function CriarConta() {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          className="criar-conta-input"
           required
         />
         <input
@@ -122,9 +129,10 @@ function CriarConta() {
           placeholder="Senha"
           value={senha}
           onChange={(e) => setSenha(e.target.value)}
+          className="criar-conta-input"
           required
         />
-        <button type="submit">Criar Conta</button>
+        <button type="submit" className="criar-conta-button">Criar Conta</button>
       </form>
     </div>
   );

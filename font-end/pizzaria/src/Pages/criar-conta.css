@@ -1,39 +1,37 @@
-.container {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
+.criar-conta-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
   
-  h2 {
-    text-align: center;
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  input {
-    margin-bottom: 10px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-  }
-  
-  button {
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
+}
+
+.criar-conta-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex;
+  width: 100%;
+  max-width: 400px;
+}
+
+.criar-conta-input {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.criar-conta-button {
+  padding: 0.75rem 1.5rem;
+  background-color: #FFA500;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.criar-conta-button:hover {
+  background-color: #FF8C00;
+}
