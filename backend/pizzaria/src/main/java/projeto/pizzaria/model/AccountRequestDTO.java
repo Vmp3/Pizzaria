@@ -4,6 +4,7 @@ package projeto.pizzaria.model;
 public class AccountRequestDTO {
     private String cpf;
     private String nome;
+    private String cep;
     private String endereco;
     private String numero;
     private String email;
@@ -12,16 +13,16 @@ public class AccountRequestDTO {
     public AccountRequestDTO() {
     }
 
-    public AccountRequestDTO(String cpf, String nome, String endereco, String numero, String email, String senha) {
+    public AccountRequestDTO(String cpf, String nome, String cep, String endereco, String numero, String email, String senha) {
         this.cpf = cpf;
         this.nome = nome;
+        this.cep = cep;
         this.endereco = endereco;
         this.numero = numero;
         this.email = email;
         this.senha = senha;
     }
 
-    // getters e setters
     public String getCpf() {
         return cpf;
     }
@@ -36,6 +37,14 @@ public class AccountRequestDTO {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
     }
 
     public String getEndereco() {

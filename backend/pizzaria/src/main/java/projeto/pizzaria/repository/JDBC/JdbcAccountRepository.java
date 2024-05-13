@@ -19,15 +19,16 @@ public class JdbcAccountRepository implements AccountRepository {
 
     @Override
     public void save(AccountRequestDTO requestDTO) {
-        String sql = "INSERT INTO accounts (cpf, nome, endereco, numero, email, senha) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO accounts (cpf, nome, cep ,endereco, numero, email, senha) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, requestDTO.getCpf());
             statement.setString(2, requestDTO.getNome());
-            statement.setString(3, requestDTO.getEndereco());
-            statement.setString(4, requestDTO.getNumero());
-            statement.setString(5, requestDTO.getEmail());
-            statement.setString(6, requestDTO.getSenha());
+            statement.setString(3, requestDTO.getCep());
+            statement.setString(4, requestDTO.getEndereco());
+            statement.setString(5, requestDTO.getNumero());
+            statement.setString(6, requestDTO.getEmail());
+            statement.setString(7, requestDTO.getSenha());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

@@ -22,7 +22,7 @@ public class AccountController {
 
     @PostMapping("/criar-conta")
     public ResponseEntity<?> criarConta(@RequestBody AccountRequestDTO requestDTO) {
-        if (requestDTO.getCpf() == null || requestDTO.getNome() == null ||
+        if (requestDTO.getCpf() == null || requestDTO.getNome() == null || requestDTO.getCep() == null ||
                 requestDTO.getEndereco() == null || requestDTO.getNumero() == null ||
                 requestDTO.getEmail() == null || requestDTO.getSenha() == null) {
             return ResponseEntity.badRequest().body("Todos os campos são obrigatórios.");
