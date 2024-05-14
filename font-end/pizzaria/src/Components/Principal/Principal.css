@@ -62,7 +62,7 @@
 }
 
 
-@media (min-width: 1080px) {
+@media (max-width: 1080px) {
  .video-container {
   height: 90vh;
  }

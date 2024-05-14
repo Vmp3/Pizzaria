@@ -1,17 +1,16 @@
+// AccountController.java
 package projeto.pizzaria.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import projeto.pizzaria.repository.AccountRepository;
-import projeto.pizzaria.model.AccountRequestDTO;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
+import projeto.pizzaria.model.AccountRequestDTO;
+import projeto.pizzaria.repository.AccountRepository;
 
 @CrossOrigin(origins = "*")
-
-
 @RestController
 public class AccountController {
     private final AccountRepository accountRepository;
@@ -28,8 +27,11 @@ public class AccountController {
             return ResponseEntity.badRequest().body("Todos os campos são obrigatórios.");
         }
 
-        accountRepository.save(requestDTO);
-
-        return ResponseEntity.ok("Conta criada com sucesso!");
+        try {
+            accountRepository.save(requestDTO);
+            return ResponseEntity.ok("Conta criada com sucesso!");
+        } catch (IllegalStateException e) {
+            return ResponseEntity.badRequest().body("Erro ao criar conta: " + e.getMessage());
+        }
     }
 }

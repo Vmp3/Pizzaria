@@ -83,7 +83,7 @@
 }
 
 
-@media (min-width: 1080px) {
+@media (max-width: 1080px) {
   .header-links {
     margin-left: 80.5rem;
   }

@@ -12,6 +12,15 @@ function App() {
       <Router>
         <Menu />
         <Routes>
+        <Route
+            path="/"
+            element={
+              <div>
+                <Principal />
+                <Sobre />
+              </div>
+            }
+          />
           <Route
             path="/home"
             element={
