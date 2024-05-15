@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./criar-conta.css"; // Importe o arquivo CSS que acabamos de criar
+import "./criar-conta.css";
 
 function CriarConta() {
   const [cpf, setCpf] = useState("");
@@ -55,20 +55,28 @@ function CriarConta() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8080/criar-conta", {
-        cpf,
-        nome,
-        cep,
-        endereco,
-        numero,
-        email,
-        senha,
-      });
-      console.log(response.data);
+        const response = await axios.post("http://localhost:8080/criar-conta", {
+            cpf,
+            nome,
+            cep,
+            endereco,
+            numero,
+            email,
+            senha,
+        });
+        console.log(response.data);
+        alert("Conta criada com sucesso!");
     } catch (error) {
-      console.error("Erro ao criar conta:", error);
+        console.error("Erro ao criar conta:", error);
+        if (error.response && error.response.data) {
+            alert("Erro ao criar conta: " + error.response.data.message);
+        } else {
+            alert("Erro ao criar conta: " + error.message);
+        }
     }
-  };
+};
+
+
 
   return (
     <div className="criar-conta-container">
