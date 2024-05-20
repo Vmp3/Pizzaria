@@ -49,6 +49,24 @@ public class JdbcAccountRepository implements AccountRepository {
         }
     }
 
+    @Override
+    public boolean verifyCredentials(String cpf, String senha) {
+        String sql = "SELECT COUNT(*) FROM accounts WHERE cpf = ? AND senha = ?";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, cpf);
+            statement.setString(2, senha);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException e) {
+            throw new IllegalStateException("Erro ao verificar credenciais.", e);
+        }
+        return false;
+    }
+
     private boolean emailExists(Connection connection, String email) throws SQLException {
         String sql = "SELECT COUNT(*) FROM accounts WHERE email = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {

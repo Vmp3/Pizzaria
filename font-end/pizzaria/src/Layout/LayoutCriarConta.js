@@ -1,5 +1,5 @@
 import React from 'react';
-import CriarConta from '../Pages/criar-conta';
+import CriarConta from '../Pages/CriarConta/criar-conta';
 
 function LayoutCriarConta() {
   return (
