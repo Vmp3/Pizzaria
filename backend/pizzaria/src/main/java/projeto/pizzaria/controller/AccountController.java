@@ -8,8 +8,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import projeto.pizzaria.model.AccountRequestDTO;
+<<<<<<< HEAD
 import projeto.pizzaria.repository.AccountRepository;
 
+=======
+import projeto.pizzaria.model.LoginRequestDTO;
+import projeto.pizzaria.repository.AccountRepository;
+>>>>>>> development
 @CrossOrigin(origins = "*")
 @RestController
 public class AccountController {
@@ -33,5 +38,30 @@ public class AccountController {
         } catch (IllegalStateException e) {
             return ResponseEntity.badRequest().body("Erro ao criar conta: " + e.getMessage());
         }
+<<<<<<< HEAD
+=======
+    }
+<<<<<<< Updated upstream
+}
+=======
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequestDTO requestDTO) {
+        if (requestDTO.getCpf() == null || requestDTO.getSenha() == null) {
+            return ResponseEntity.badRequest().body("CPF e senha são obrigatórios.");
+        }
+
+        try {
+            boolean isValid = accountRepository.verifyCredentials(requestDTO.getCpf(), requestDTO.getSenha());
+            if (isValid) {
+                return ResponseEntity.ok("Login realizado com sucesso!");
+            } else {
+                return ResponseEntity.status(401).body("Credenciais inválidas.");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Erro ao realizar login: " + e.getMessage());
+        }
+>>>>>>> development
     }
 }
+>>>>>>> Stashed changes

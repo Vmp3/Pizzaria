@@ -5,6 +5,7 @@ import Principal from "./Components/Principal/Principal";
 import Sobre from "./Components/Sobre/Sobre";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LayoutCriarConta from "./Layout/LayoutCriarConta";
+import LayoutLogin from "./Layout/LayoutLogin";
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
             }
           />
           <Route path="/criar-conta" element={<LayoutCriarConta />} />
+          <Route path="/login" element={<LayoutLogin />} />
         </Routes>
         <Footer />
       </Router>
