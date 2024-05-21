@@ -33,9 +33,7 @@ public class AccountController {
             return ResponseEntity.badRequest().body("Erro ao criar conta: " + e.getMessage());
         }
     }
-<<<<<<< Updated upstream
-}
-=======
+
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDTO requestDTO) {
@@ -55,4 +53,3 @@ public class AccountController {
         }
     }
 }
->>>>>>> Stashed changes
