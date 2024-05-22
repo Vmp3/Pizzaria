@@ -5,48 +5,61 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { Link, useLocation } from 'react-router-dom';
 
-const Menu = () => {
+const Logo = () => {
+  return (
+    <div className="header-logo">
+      <Link to="/home">
+        <img src={logoPizza} alt="Logotipo Senac" />
+      </Link>
+    </div>
+  );
+};
+
+const Title = () => {
+  return (
+    <div className="header-title">
+      <h1>Pizza</h1>
+      <span className="highlight">Gurizada</span>
+    </div>
+  );
+};
+
+const NavLink = ({ to, children }) => {
   const location = useLocation();
-  const [currentPage, setCurrentPage] = useState(location.pathname);
+  const isActive = location.pathname === to;
+  
+  return (
+    <Link to={to} className={isActive ? "active" : ""}>
+      {children}
+    </Link>
+  );
+};
 
-  useEffect(() => {
-    setCurrentPage(location.pathname);
-  }, [location]);
+const NavigationLinks = () => {
+  return (
+    <div className="header-links">
+      <NavLink to="/home">Home</NavLink>
+      <NavLink to="/menu">Menu</NavLink>
+      <NavLink to="/sobre">Sobre</NavLink>
+      <NavLink to="/contato">Contato</NavLink>
+      <NavLink to="/criar-conta">
+        <FontAwesomeIcon icon={faUser} />
+      </NavLink>
+      <NavLink to="/carrinho">
+        <FontAwesomeIcon icon={faShoppingCart} />
+      </NavLink>
+    </div>
+  );
+};
 
+const Menu = () => {
   return (
     <div className="header-container">
       <header className="header-bottom">
         <div className="header-left">
-          <div className="header-logo">
-            <Link to="/home">
-              <img src={logoPizza} alt="Logotipo Senac" />
-            </Link>
-          </div>
-
-          <div className="header-title">
-            <h1>Pizza</h1>
-            <span className="highlight">Gurizada</span>
-          </div>
-          <div className="header-links">
-            <Link to="/home" className={currentPage === "/home" ? "active" : ""}>
-              Home
-            </Link>
-            <Link to="/menu" className={currentPage === "/menu" ? "active" : ""}>
-              Menu
-            </Link>
-            <Link to="/sobre" className={currentPage === "/sobre" ? "active" : ""}>
-              Sobre
-            </Link>
-            <Link to="/contato" className={currentPage === "/contato" ? "active" : ""}>
-              Contato
-            </Link>
-            <Link to="/criar-conta" className={currentPage === "/criar-conta" ? "active" : ""}>
-              <FontAwesomeIcon icon={faUser} />
-            </Link>
-            <Link to="/carrinho" className={currentPage === "/carrinho" ? "active" : ""}>
-              <FontAwesomeIcon icon={faShoppingCart} />
-            </Link>
-          </div>
+          <Logo />
+          <Title />
+          <NavigationLinks />
         </div>
       </header>
     </div>

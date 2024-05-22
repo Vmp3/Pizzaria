@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import "./Principal.css";
 
-const Principal = () => {
+const VideoBackground = () => {
   const videoRef = useRef(null);
 
   useEffect(() => {
@@ -24,14 +24,26 @@ const Principal = () => {
         />
         Seu navegador não suporta o elemento de vídeo.
       </video>
-      <div className="text-overlay">
-        <p className="welcome">Welcome</p>
-        <h2>Bem-vindo à nossa pizzaria!</h2>
-        <p>
-          Não perca essa chance de ter um belo jantar! Realize seu pedido abaixo
-        </p>
-      </div>
     </div>
+  );
+};
+
+const TextOverlay = () => {
+  return (
+    <div className="text-overlay">
+      <p className="welcome">Welcome</p>
+      <h2>Bem-vindo à nossa pizzaria!</h2>
+      <p>Não perca essa chance de ter um belo jantar! Realize seu pedido abaixo</p>
+    </div>
+  );
+};
+
+const Principal = () => {
+  return (
+    <>
+      <VideoBackground />
+      <TextOverlay />
+    </>
   );
 };
 

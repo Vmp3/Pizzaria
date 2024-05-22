@@ -43,7 +43,6 @@ function Login() {
       <h2>Login</h2>
       <form onSubmit={handleSubmit} className="login-form">
         <CustomInput
-          styleType="texto"
           type="text"
           placeholder="CPF"
           value={cpf}
@@ -57,7 +56,7 @@ function Login() {
           onChange={(e) => setSenha(e.target.value)}
           required
         />
-        <CustomButton text="Login" styleType="fodase"/>
+        <CustomButton text="Login"/>
       </form>
       <p>{mensagem}</p>
     </div>
