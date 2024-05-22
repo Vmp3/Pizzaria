@@ -1,4 +1,3 @@
-// Em Menu.js
 import React, { useState, useEffect } from "react";
 import "./Menu.css";
 import logoPizza from "./pizza_logo.png";

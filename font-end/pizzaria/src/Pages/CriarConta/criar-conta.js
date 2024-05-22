@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./criar-conta.css";
+import { formatCPF, formatCEP } from "../../Util/Utils";
+import CustomInput from "../../Util/CustomInput";
+import CustomButton from "../../Util/CustomButton";
 
 function CriarConta() {
   const [cpf, setCpf] = useState("");
@@ -10,22 +13,6 @@ function CriarConta() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [cep, setCep] = useState("");
-
-  const formatCPF = (value) => {
-    let cpfFormatted = value.replace(/\D/g, "");
-    cpfFormatted = cpfFormatted.substring(0, 11);
-    cpfFormatted = cpfFormatted.replace(/(\d{3})(\d)/, "$1.$2");
-    cpfFormatted = cpfFormatted.replace(/(\d{3})(\d)/, "$1.$2");
-    cpfFormatted = cpfFormatted.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
-    return cpfFormatted;
-  };
-
-  const formatCEP = (value) => {
-    let cepFormatted = value.replace(/\D/g, "");
-    cepFormatted = cepFormatted.substring(0, 8);
-    cepFormatted = cepFormatted.replace(/(\d{5})(\d)/, "$1-$2");
-    return cepFormatted;
-  };
 
   const handleCpfChange = (event) => {
     const formattedCpf = formatCPF(event.target.value);
@@ -74,73 +61,64 @@ function CriarConta() {
             alert("Erro ao criar conta: " + error.message);
         }
     }
-};
-
-
+  };
 
   return (
     <div className="criar-conta-container">
       <h2>Criar Conta</h2>
       <form onSubmit={handleSubmit} className="criar-conta-form">
-        <input
+        <CustomInput
           type="text"
           placeholder="CPF"
           value={cpf}
           onChange={handleCpfChange}
-          className="criar-conta-input"
           required
         />
-        <input
+        <CustomInput
           type="text"
           placeholder="Nome"
           value={nome}
           onChange={(e) => setNome(e.target.value)}
-          className="criar-conta-input"
           required
         />
-        <input
+        <CustomInput
           type="text"
           placeholder="CEP"
           value={cep}
           onChange={handleCepChange}
           maxLength={9}
-          className="criar-conta-input"
           required
         />
-        <input
+        <CustomInput
           type="text"
           placeholder="Endereço"
           value={endereco}
           onChange={(e) => setEndereco(e.target.value)}
           readOnly
-          className="criar-conta-input"
           required
         />
-        <input
+        <CustomInput
           type="text"
           placeholder="Número"
           value={numero}
           onChange={(e) => setNumero(e.target.value)}
-          className="criar-conta-input"
           required
         />
-        <input
+        <CustomInput
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="criar-conta-input"
           required
         />
-        <input
+        <CustomInput
           type="password"
           placeholder="Senha"
           value={senha}
           onChange={(e) => setSenha(e.target.value)}
-          className="criar-conta-input"
           required
         />
-        <button type="submit" className="criar-conta-button">Criar Conta</button>
+        <CustomButton type="submit" text="Criar Conta" />
       </form>
     </div>
   );

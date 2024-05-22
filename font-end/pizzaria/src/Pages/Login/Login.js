@@ -1,20 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./Login.css";
+import "./Login.css"
+import { formatCPF } from "../../Util/Utils";
+import CustomInput from "../../Util/CustomInput";
+import CustomButton from "../../Util/CustomButton";
 
 function Login() {
   const [cpf, setCpf] = useState("");
   const [senha, setSenha] = useState("");
   const [mensagem, setMensagem] = useState("");
-
-  const formatCPF = (value) => {
-    let cpfFormatted = value.replace(/\D/g, "");
-    cpfFormatted = cpfFormatted.substring(0, 11);
-    cpfFormatted = cpfFormatted.replace(/(\d{3})(\d)/, "$1.$2");
-    cpfFormatted = cpfFormatted.replace(/(\d{3})(\d)/, "$1.$2");
-    cpfFormatted = cpfFormatted.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
-    return cpfFormatted;
-  };
 
   const handleCpfChange = (event) => {
     const formattedCpf = formatCPF(event.target.value);
@@ -48,25 +42,22 @@ function Login() {
     <div className="login-container">
       <h2>Login</h2>
       <form onSubmit={handleSubmit} className="login-form">
-        <input
+        <CustomInput
+          styleType="texto"
           type="text"
           placeholder="CPF"
           value={cpf}
           onChange={handleCpfChange}
-          className="login-input"
           required
         />
-        <input
+        <CustomInput
           type="password"
           placeholder="Senha"
           value={senha}
           onChange={(e) => setSenha(e.target.value)}
-          className="login-input"
           required
         />
-        <button type="submit" className="login-button">
-          Login
-        </button>
+        <CustomButton text="Login" styleType="fodase"/>
       </form>
       <p>{mensagem}</p>
     </div>
