@@ -1,0 +1,25 @@
+.grid-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+  }
+  
+  .grid-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+  
+  .pizza-image {
+    max-width: 158px;
+    max-height: 158px;
+    width: auto;
+    height: auto;
+  }
+  
+  

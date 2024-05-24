@@ -6,6 +6,9 @@ import Sobre from "./Components/Sobre/Sobre";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LayoutCriarConta from "./Layout/LayoutCriarConta";
 import LayoutLogin from "./Layout/LayoutLogin";
+import LayoutCriarPizza from "./Layout/LayoutCriarPizza";
+import LayoutListarPizza from "./Layout/LayoutListarPizza";
+import LayoutMontarPizza from "./Layout/LayoutMontarPizza";
 
 function App() {
   return (
@@ -51,6 +54,9 @@ function App() {
           />
           <Route path="/criar-conta" element={<LayoutCriarConta />} />
           <Route path="/login" element={<LayoutLogin />} />
+          <Route path="/criar-pizza" element={<LayoutCriarPizza />} />
+          <Route path="/listar-pizza" element={<LayoutListarPizza />} />
+          <Route path="/montar-pizza" element={<LayoutMontarPizza />} />
         </Routes>
         <Footer />
       </Router>

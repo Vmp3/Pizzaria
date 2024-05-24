@@ -1,4 +1,3 @@
-// CustomButton.js
 import React from 'react';
 import './CustomStyles.css';
 

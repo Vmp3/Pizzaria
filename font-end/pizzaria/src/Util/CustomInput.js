@@ -1,9 +1,8 @@
-// CustomInput.js
 import React from 'react';
 import './CustomStyles.css';
 
 const CustomInput = (props) => {
-  const { type, placeholder, value, onChange, required, backgroundColor, styleType } = props;
+  const { type, name, placeholder, value, onChange, required, backgroundColor, styleType } = props;
 
   const inputClassName = `custom-input ${styleType}`;
 
@@ -14,6 +13,7 @@ const CustomInput = (props) => {
   return (
     <input
       type={type}
+      name={name}
       placeholder={placeholder}
       value={value}
       onChange={onChange}
