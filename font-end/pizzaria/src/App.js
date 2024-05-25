@@ -16,7 +16,7 @@ function App() {
       <Router>
         <Menu />
         <Routes>
-        <Route
+          <Route
             path="/"
             element={
               <div>
@@ -49,6 +49,14 @@ function App() {
               <div>
                 <Principal />
                 <Sobre />
+              </div>
+            }
+          />
+          <Route
+            path="/menu"
+            element={
+              <div>
+                <LayoutListarPizza />
               </div>
             }
           />
