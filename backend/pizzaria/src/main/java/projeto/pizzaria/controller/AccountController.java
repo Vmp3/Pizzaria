@@ -41,9 +41,7 @@ public class AccountController {
 <<<<<<< HEAD
 =======
     }
-<<<<<<< Updated upstream
-}
-=======
+
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDTO requestDTO) {
@@ -64,4 +62,3 @@ public class AccountController {
 >>>>>>> development
     }
 }
->>>>>>> Stashed changes
