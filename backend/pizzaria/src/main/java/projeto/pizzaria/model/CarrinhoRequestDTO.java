@@ -3,8 +3,8 @@ package projeto.pizzaria.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "pedidos")
-public class PedidoRequestDTO {
+@Table(name = "carrinho")
+public class CarrinhoRequestDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,9 +16,9 @@ public class PedidoRequestDTO {
     private String sabor3;
     private double valor;
 
-    public PedidoRequestDTO() {}
+    public CarrinhoRequestDTO() {}
 
-    public PedidoRequestDTO(String tamanho, String sabor1, String sabor2, String sabor3, double valor) {
+    public CarrinhoRequestDTO(String tamanho, String sabor1, String sabor2, String sabor3, double valor) {
         this.tamanho = tamanho;
         this.sabor1 = sabor1;
         this.sabor2 = sabor2;

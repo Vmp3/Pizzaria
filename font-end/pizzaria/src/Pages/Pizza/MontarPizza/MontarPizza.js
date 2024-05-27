@@ -52,7 +52,7 @@ function MontarPizza() {
       valorTotal = 99;
     }
 
-    const pedido = {
+    const carrinho = {
       tamanho: tamanho,
       sabor1: sabores[0],
       sabor2: sabores[1],
@@ -61,10 +61,10 @@ function MontarPizza() {
     };
 
     try {
-      const response = await axios.post('http://localhost:8080/pedidos/adicionar', pedido);
+      const response = await axios.post('http://localhost:8080/carrinho/adicionar', carrinho);
       setMensagem(response.data);
     } catch (error) {
-      setErro('Erro ao adicionar pedido: ' + error.message);
+      setErro('Erro ao adicionar carrinho: ' + error.message);
     }
   };
 
@@ -108,7 +108,7 @@ function MontarPizza() {
             ))}
           </div>
         )}
-        <button type="submit">Enviar Pedido</button>
+        <button type="submit">Enviar Carrinho</button>
       </form>
       {mensagem && <p>{mensagem}</p>}
     </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import Pizza from '../Pages/Pizza/CriarPizza';
+import Pizza from '../Pages/Pizza/CriarPizza/CriarPizza';
 
 function LayoutCriarPizza() {
   return (

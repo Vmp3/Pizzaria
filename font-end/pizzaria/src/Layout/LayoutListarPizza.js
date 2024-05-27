@@ -1,5 +1,5 @@
 import React from 'react';
-import ListarPizzas from '../Pages/Pizza/ListarPizza';
+import ListarPizzas from '../Pages/Pizza/ListarPizza/ListarPizza';
 function LayoutListarPizza() {
   return (
     <div>
