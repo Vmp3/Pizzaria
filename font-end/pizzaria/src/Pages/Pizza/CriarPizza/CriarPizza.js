@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import CustomInput from "../../Util/CustomInput";
-import CustomButton from "../../Util/CustomButton";
+import CustomInput from "../../../Util/CustomInput";
+import CustomButton from "../../../Util/CustomButton";
 
 function PizzaForm() {
   const [pizza, setPizza] = useState({
