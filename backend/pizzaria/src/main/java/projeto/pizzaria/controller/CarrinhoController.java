@@ -23,10 +23,10 @@ public class CarrinhoController {
     public ResponseEntity<?> adicionarCarrinho(@RequestBody CarrinhoRequestDTO carrinhoDTO) {
         try {
             carrinhoRepository.save(carrinhoDTO);
-            return ResponseEntity.ok("Carrinho adicionado com sucesso!");
+            return ResponseEntity.ok("Pizza adicionada ao carrinho com sucesso!");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Erro ao adicionar carrinho: " + e.getMessage());
+                    .body("Erro ao adicionar ao carrinho: " + e.getMessage());
         }
     }
 
