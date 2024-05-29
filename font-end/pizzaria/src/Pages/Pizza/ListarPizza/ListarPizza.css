@@ -2,7 +2,14 @@
 body {
   font-family: 'Arial', sans-serif;
   color: #fff;
+}
+
+.background-container {
   background-image: url('landing-bg.270db7f8775652679ffe.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
 }
 
 .container {
@@ -17,7 +24,6 @@ h2 {
   color: #ffcc00;
 }
 
-/* Grid styles */
 .grid {
   display: flex;
   flex-wrap: wrap;
@@ -27,7 +33,6 @@ h2 {
 
 .grid-item {
   background-color: transparent;
-
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
