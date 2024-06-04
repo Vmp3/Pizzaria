@@ -22,16 +22,16 @@ function ListarPizzas() {
   return (
     <div className="background-container">
       <div className="container">
-        <h2>Listagem de Sabores</h2>
-        {erro && <p>{erro}</p>}
+        <h2 className="pizza-title">Listagem de Sabores</h2>
+        {erro && <p className="error-message">{erro}</p>}
         <div className="grid">
           {pizzas.map((pizza) => (
             <div key={pizza.id} className="grid-item">
               <div className="pizza-image-container">
                 {pizza.imagem && <img src={pizza.imagem} alt={pizza.titulo} className="pizza-image" />}
               </div>
-              <h3>{pizza.titulo}</h3>
-              <p>{pizza.descricao}</p>
+              <h3 className="pizza-subtitle">{pizza.titulo}</h3>
+              <p className="pizza-description">{pizza.descricao}</p>
             </div>
           ))}
         </div>
