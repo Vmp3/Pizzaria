@@ -22,7 +22,9 @@ function App() {
               element={
                 <div>
                   <Principal />
-                  <Sobre />
+                  <div id="sobre">
+                    <Sobre />
+                  </div>
                 </div>
               }
             />
@@ -31,25 +33,9 @@ function App() {
               element={
                 <div>
                   <Principal />
-                  <Sobre />
-                </div>
-              }
-            />
-            <Route
-              path="/sobre"
-              element={
-                <div>
-                  <Principal />
-                  <Sobre />
-                </div>
-              }
-            />
-            <Route
-              path="/contato"
-              element={
-                <div>
-                  <Principal />
-                  <Sobre />
+                  <div id="sobre">
+                    <Sobre />
+                  </div>
                 </div>
               }
             />
