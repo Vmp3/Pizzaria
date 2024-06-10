@@ -25,6 +25,9 @@ function App() {
                   <div id="sobre">
                     <Sobre />
                   </div>
+                  <div id="sabores">
+                    <LayoutListarPizza />
+                  </div>
                 </div>
               }
             />
@@ -35,6 +38,9 @@ function App() {
                   <Principal />
                   <div id="sobre">
                     <Sobre />
+                  </div>
+                  <div id="sabores">
+                    <LayoutListarPizza />
                   </div>
                 </div>
               }
@@ -54,7 +60,9 @@ function App() {
             <Route path="/montar-pizza" element={<LayoutMontarPizza />} />
           </Routes>
         </div>
-        <Footer />
+        <div id="contato">
+          <Footer/>
+        </div>
       </Router>
     </div>
   );

@@ -24,8 +24,26 @@ const NavigationLinks = () => {
       >
         Sobre
       </ScrollLink>
-      <NavLink to="/menu" className={activeLink === 'menu' ? 'active' : ''} onClick={() => handleSetActive('menu')}>Menu</NavLink>
-      <NavLink to="/contato" className={activeLink === 'contato' ? 'active' : ''} onClick={() => handleSetActive('contato')}>Contato</NavLink>
+      <ScrollLink 
+        to="sabores" 
+        smooth={true} 
+        duration={500} 
+        offset={-70}
+        className={activeLink === 'sabores' ? 'active' : ''}
+        onSetActive={() => handleSetActive('sabores')}
+      >
+        Sabores
+      </ScrollLink>
+      <ScrollLink 
+        to="contato" 
+        smooth={true} 
+        duration={500} 
+        offset={-70}
+        className={activeLink === 'contato' ? 'active' : ''}
+        onSetActive={() => handleSetActive('contato')}
+      >
+        Contato
+      </ScrollLink>
       <NavLink to="/criar-conta" className={activeLink === 'criar-conta' ? 'active' : ''} onClick={() => handleSetActive('criar-conta')}>
         <FontAwesomeIcon icon={faUser} />
       </NavLink>
