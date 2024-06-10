@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./Login.css"
+import "./Login.css";
 import { formatCPF } from "../../Util/Utils";
 import CustomInput from "../../Util/CustomInput";
 import CustomButton from "../../Util/CustomButton";
@@ -40,7 +40,7 @@ function Login() {
 
   return (
     <div className="login-container">
-      <h2>Login</h2>
+      <h2 className="login-title">Login</h2>
       <form onSubmit={handleSubmit} className="login-form">
         <CustomInput
           type="text"
@@ -58,7 +58,7 @@ function Login() {
         />
         <CustomButton text="Login"/>
       </form>
-      <p>{mensagem}</p>
+      <p className="mensagem">{mensagem}</p>
     </div>
   );
 }

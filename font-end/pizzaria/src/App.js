@@ -15,57 +15,59 @@ function App() {
     <div className="App">
       <Router>
         <Menu />
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <div>
-                <Principal />
-                <Sobre />
-              </div>
-            }
-          />
-          <Route
-            path="/home"
-            element={
-              <div>
-                <Principal />
-                <Sobre />
-              </div>
-            }
-          />
-          <Route
-            path="/sobre"
-            element={
-              <div>
-                <Principal />
-                <Sobre />
-              </div>
-            }
-          />
-          <Route
-            path="/contato"
-            element={
-              <div>
-                <Principal />
-                <Sobre />
-              </div>
-            }
-          />
-          <Route
-            path="/menu"
-            element={
-              <div>
-                <LayoutListarPizza />
-              </div>
-            }
-          />
-          <Route path="/criar-conta" element={<LayoutCriarConta />} />
-          <Route path="/login" element={<LayoutLogin />} />
-          <Route path="/criar-pizza" element={<LayoutCriarPizza />} />
-          <Route path="/listar-pizza" element={<LayoutListarPizza />} />
-          <Route path="/montar-pizza" element={<LayoutMontarPizza />} />
-        </Routes>
+        <div className="App-content">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <div>
+                  <Principal />
+                  <Sobre />
+                </div>
+              }
+            />
+            <Route
+              path="/home"
+              element={
+                <div>
+                  <Principal />
+                  <Sobre />
+                </div>
+              }
+            />
+            <Route
+              path="/sobre"
+              element={
+                <div>
+                  <Principal />
+                  <Sobre />
+                </div>
+              }
+            />
+            <Route
+              path="/contato"
+              element={
+                <div>
+                  <Principal />
+                  <Sobre />
+                </div>
+              }
+            />
+            <Route
+              path="/menu"
+              element={
+                <div>
+                  <LayoutListarPizza />
+                </div>
+              }
+            />
+            <Route path="/criar-conta" element={<LayoutCriarConta />} />
+            <Route path="/login" element={<LayoutLogin />} />
+            <Route path="/criar-pizza" element={<LayoutCriarPizza />} />
+            <Route path="/listar-pizza" element={<LayoutListarPizza />} />
+            <Route path="/montar-pizza" element={<LayoutMontarPizza />} />
+          </Routes>
+        </div>
         <Footer />
       </Router>
     </div>

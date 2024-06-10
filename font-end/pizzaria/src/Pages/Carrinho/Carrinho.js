@@ -9,7 +9,7 @@ function ListarPizzas() {
   useEffect(() => {
     const fetchPizzas = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/pizzas/listar');
+        const response = await axios.get('http://localhost:8080/carrinhos/listar');
         setPizzas(response.data);
       } catch (error) {
         setErro('Erro ao buscar pizzas: ' + error.message);

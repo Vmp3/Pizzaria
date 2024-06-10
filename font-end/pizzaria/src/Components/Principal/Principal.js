@@ -33,7 +33,7 @@ const TextOverlay = () => {
     <div className="text-overlay">
       <p className="welcome">Welcome</p>
       <h2>Bem-vindo à nossa pizzaria!</h2>
-      <p>Não perca essa chance de ter um belo jantar! Realize seu pedido abaixo</p>
+      <p>Não perca essa chance de ter um belo jantar! Realize seu carrinho abaixo</p>
     </div>
   );
 };

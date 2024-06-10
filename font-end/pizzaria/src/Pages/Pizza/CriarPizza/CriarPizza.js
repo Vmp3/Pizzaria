@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-import CustomInput from "../../Util/CustomInput";
-import CustomButton from "../../Util/CustomButton";
+import CustomInput from "../../../Util/CustomInput";
+import CustomButton from "../../../Util/CustomButton";
+import "./CriarPizza.css";
 
 function PizzaForm() {
   const [pizza, setPizza] = useState({
@@ -65,7 +66,7 @@ function PizzaForm() {
         />
         <CustomButton text="Adicionar Sabor" />
       </form>
-      <p>{mensagem}</p>
+      <p className="mensagem">{mensagem}</p>
     </div>
   );
 }

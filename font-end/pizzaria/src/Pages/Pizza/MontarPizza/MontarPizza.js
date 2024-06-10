@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './MontarPizza.css';
 
 function MontarPizza() {
   const [tamanho, setTamanho] = useState('');
@@ -52,7 +53,7 @@ function MontarPizza() {
       valorTotal = 99;
     }
 
-    const pedido = {
+    const carrinho = {
       tamanho: tamanho,
       sabor1: sabores[0],
       sabor2: sabores[1],
@@ -61,17 +62,17 @@ function MontarPizza() {
     };
 
     try {
-      const response = await axios.post('http://localhost:8080/pedidos/adicionar', pedido);
+      const response = await axios.post('http://localhost:8080/carrinho/adicionar', carrinho);
       setMensagem(response.data);
     } catch (error) {
-      setErro('Erro ao adicionar pedido: ' + error.message);
+      setErro('Erro ao adicionar carrinho: ' + error.message);
     }
   };
 
   return (
     <div>
       <h2>Montar Pizza</h2>
-      {erro && <p>{erro}</p>}
+      {erro && <p className="error-message">{erro}</p>}
       <form onSubmit={handleSubmit}>
         <div>
           <label>Tamanho:</label>
@@ -108,9 +109,9 @@ function MontarPizza() {
             ))}
           </div>
         )}
-        <button type="submit">Enviar Pedido</button>
+        <button type="submit">Enviar Carrinho</button>
       </form>
-      {mensagem && <p>{mensagem}</p>}
+      {mensagem && <p className="mensagem">{mensagem}</p>}
     </div>
   );
 }
