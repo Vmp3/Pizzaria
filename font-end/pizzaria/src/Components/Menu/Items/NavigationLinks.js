@@ -28,25 +28,26 @@ const NavigationLinks = () => {
 
   return (
     <div className="header-links">
-      <a
-        to="/home"
-        className={activeLink === "home" ? "active" : ""}
-        onClick={() => handleSetActive("home")}
+      <NavLink
+       to="/home"
+       className={activeLink === "home" ? "active" : ""}
+       onClick={() => handleSetActive("home")}
       >
         Home
-      </a>
+      </NavLink>
       <a
         className={activeLink === "sobre" ? "active" : ""}
         onClick={() => handleNavigateAndScroll("/home", "sobre")}
       >
         Sobre
       </a>
-      <a
-        className={activeLink === "sabores" ? "active" : ""}
-        onClick={() => handleNavigateAndScroll("/home", "sabores")}
+      <NavLink
+         to="/menu"
+         className={activeLink === "menu" ? "active" : ""}
+         onClick={() => handleSetActive("menu")}
       >
-        Sabores
-      </a>
+        Menu
+      </NavLink>
       <a
         className={activeLink === "contato" ? "active" : ""}
         onClick={() => handleNavigateAndScroll("/home", "contato")}
