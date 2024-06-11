@@ -23,7 +23,7 @@ public class CarrinhoController {
     public ResponseEntity<?> adicionarCarrinho(@RequestBody CarrinhoRequestDTO carrinhoDTO) {
         try {
             carrinhoRepository.save(carrinhoDTO);
-            return ResponseEntity.ok("Pizza adicionada ao carrinho com sucesso!");
+            return ResponseEntity.ok(carrinhoDTO.getId()); // Retorna o ID gerado
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Erro ao adicionar ao carrinho: " + e.getMessage());
@@ -34,6 +34,17 @@ public class CarrinhoController {
     public ResponseEntity<List<CarrinhoRequestDTO>> listarcarrinho() {
         List<CarrinhoRequestDTO> carrinho = carrinhoRepository.findAll();
         return ResponseEntity.ok(carrinho);
+    }
+
+    @DeleteMapping("/remover/{id}")
+    public ResponseEntity<?> removerCarrinho(@PathVariable Long id) {
+        try {
+            carrinhoRepository.deleteById(id);
+            return ResponseEntity.ok("Pizza removida do carrinho com sucesso!");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erro ao remover do carrinho: " + e.getMessage());
+        }
     }
 
     @PutMapping("/atualizar/{id}")

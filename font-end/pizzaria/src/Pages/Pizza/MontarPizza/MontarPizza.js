@@ -52,27 +52,49 @@ function MontarPizza() {
     } else if (tamanho === 'Grande') {
       valorTotal = 99;
     }
-
-    const carrinho = {
+  
+    const carrinhoItem = {
       tamanho: tamanho,
-      sabor1: sabores[0],
-      sabor2: sabores[1],
-      sabor3: sabores[2],
+      sabor1: sabores[0] || null,
+      sabor2: sabores[1] || null,
+      sabor3: sabores[2] || null,
       valor: valorTotal
     };
-
+  
     try {
-      const response = await axios.post('http://localhost:8080/carrinho/adicionar', carrinho);
-      setMensagem(response.data);
+      // Salvar o carrinho no localStorage antes de enviar para o servidor
+      const carrinhoAtual = JSON.parse(localStorage.getItem('carrinho')) || [];
+      const novoCarrinho = [...carrinhoAtual, carrinhoItem];
+      localStorage.setItem('carrinho', JSON.stringify(novoCarrinho));
+  
+      // Salvar o carrinho no servidor e receber o ID gerado
+      const response = await axios.post('http://localhost:8080/carrinho/adicionar', carrinhoItem);
+      const idPizzaSalva = response.data; // ID da pizza salva
+  
+      console.log('ID da pizza salva:', idPizzaSalva);
+  
+      // Adicionar o ID à pizza antes de salvar no localStorage
+      const pizzaComID = { ...carrinhoItem, id: idPizzaSalva };
+      const novoCarrinhoComID = [...carrinhoAtual, pizzaComID];
+      localStorage.setItem('carrinho', JSON.stringify(novoCarrinhoComID));
+  
+      // Limpar qualquer erro anterior e definir a mensagem de sucesso
+      setErro(null);
+      setMensagem('Pedido concluído e salvo com sucesso!');
     } catch (error) {
-      setErro('Erro ao adicionar carrinho: ' + error.message);
+      // Em caso de erro, definir a mensagem de erro
+      setErro('Erro ao concluir pedido: ' + error.message);
+      setMensagem('');
     }
   };
+  
+  
 
   return (
     <div>
       <h2>Montar Pizza</h2>
       {erro && <p className="error-message">{erro}</p>}
+      {mensagem && <p className="mensagem">{mensagem}</p>}
       <form onSubmit={handleSubmit}>
         <div>
           <label>Tamanho:</label>
@@ -99,6 +121,7 @@ function MontarPizza() {
             {Array.from({ length: numSabores }, (_, index) => (
               <div key={index}>
                 <label>{`Sabor ${index + 1}:`}</label>
+              
                 <select value={sabores[index] || ''} onChange={(e) => handleSaborChange(index, e)} required>
                   <option value="">Selecione o sabor</option>
                   {saboresDisponiveis.map((pizza) => (
@@ -111,7 +134,6 @@ function MontarPizza() {
         )}
         <button type="submit">Enviar Carrinho</button>
       </form>
-      {mensagem && <p className="mensagem">{mensagem}</p>}
     </div>
   );
 }

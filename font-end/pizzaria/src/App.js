@@ -9,6 +9,7 @@ import LayoutLogin from "./Layout/LayoutLogin";
 import LayoutCriarPizza from "./Layout/LayoutCriarPizza";
 import LayoutListarPizza from "./Layout/LayoutListarPizza";
 import LayoutMontarPizza from "./Layout/LayoutMontarPizza";
+import Carrinho from "./Layout/LayoutCarrinho";
 
 function App() {
   return (
@@ -58,6 +59,7 @@ function App() {
             <Route path="/criar-pizza" element={<LayoutCriarPizza />} />
             <Route path="/listar-pizza" element={<LayoutListarPizza />} />
             <Route path="/montar-pizza" element={<LayoutMontarPizza />} />
+            <Route path="/carrinho" element={<Carrinho />} />
           </Routes>
         </div>
         <div id="contato">

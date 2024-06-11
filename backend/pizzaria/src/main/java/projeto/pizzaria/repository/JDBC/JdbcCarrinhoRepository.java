@@ -21,17 +21,27 @@ public class JdbcCarrinhoRepository implements CarrinhoRepository {
     public void save(CarrinhoRequestDTO carrinhoDTO) {
         String sql = "INSERT INTO carrinho (tamanho, sabor1, sabor2, sabor3, valor) VALUES (?, ?, ?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, carrinhoDTO.getTamanho());
             statement.setString(2, carrinhoDTO.getSabor1());
             statement.setString(3, carrinhoDTO.getSabor2());
             statement.setString(4, carrinhoDTO.getSabor3());
             statement.setDouble(5, carrinhoDTO.getValor());
             statement.executeUpdate();
+
+            // Recuperando o ID gerado
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    carrinhoDTO.setId(generatedKeys.getLong(1));
+                } else {
+                    throw new SQLException("Falha ao obter o ID gerado para a pizza.");
+                }
+            }
         } catch (SQLException e) {
             throw new IllegalStateException("Erro ao adicionar carrinho.", e);
         }
     }
+
 
     @Override
     public List<CarrinhoRequestDTO> findAll() {
@@ -70,6 +80,18 @@ public class JdbcCarrinhoRepository implements CarrinhoRepository {
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new IllegalStateException("Erro ao atualizar carrinho.", e);
+        }
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        String sql = "DELETE FROM carrinho WHERE id = ?";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setLong(1, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new IllegalStateException("Erro ao remover carrinho.", e);
         }
     }
 
