@@ -1,21 +1,41 @@
+import React, { useEffect } from "react";
 import "./App.css";
 import Footer from "./Components/Footer/Footer";
 import Menu from "./Components/Menu/Menu";
 import Principal from "./Components/Principal/Principal";
 import Sobre from "./Components/Sobre/Sobre";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import LayoutCriarConta from "./Layout/LayoutCriarConta";
 import LayoutLogin from "./Layout/LayoutLogin";
 import LayoutCriarPizza from "./Layout/LayoutCriarPizza";
 import LayoutListarPizza from "./Layout/LayoutListarPizza";
 import LayoutMontarPizza from "./Layout/LayoutMontarPizza";
 import Carrinho from "./Layout/LayoutCarrinho";
+import { scroller } from "react-scroll";
+
+const ScrollToSection = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    const hash = location.hash.replace("#", "");
+    if (hash) {
+      scroller.scrollTo(hash, {
+        smooth: true,
+        duration: 500,
+        offset: -70,
+      });
+    }
+  }, [location]);
+
+  return null;
+};
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Menu />
+        <ScrollToSection />
         <div className="App-content">
           <Routes>
             <Route
@@ -28,6 +48,9 @@ function App() {
                   </div>
                   <div id="sabores">
                     <LayoutListarPizza />
+                  </div>
+                  <div id="contato">
+                    <Footer />
                   </div>
                 </div>
               }
@@ -43,14 +66,9 @@ function App() {
                   <div id="sabores">
                     <LayoutListarPizza />
                   </div>
-                </div>
-              }
-            />
-            <Route
-              path="/menu"
-              element={
-                <div>
-                  <LayoutListarPizza />
+                  <div id="contato">
+                    <Footer />
+                  </div>
                 </div>
               }
             />
@@ -61,9 +79,6 @@ function App() {
             <Route path="/montar-pizza" element={<LayoutMontarPizza />} />
             <Route path="/carrinho" element={<Carrinho />} />
           </Routes>
-        </div>
-        <div id="contato">
-          <Footer/>
         </div>
       </Router>
     </div>

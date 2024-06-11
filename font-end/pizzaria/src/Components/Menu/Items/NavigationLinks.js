@@ -1,53 +1,70 @@
-import React, { useState } from 'react';
-import { Link as ScrollLink } from 'react-scroll';
-import NavLink from './NavLink';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import React, { useState } from "react";
+import { scroller } from "react-scroll";
+import NavLink from "./NavLink";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const NavigationLinks = () => {
-  const [activeLink, setActiveLink] = useState('');
+  const [activeLink, setActiveLink] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSetActive = (link) => {
     setActiveLink(link);
   };
 
+  const handleNavigateAndScroll = (path, section) => {
+    navigate(path);
+    setActiveLink(section);
+    setTimeout(() => {
+      scroller.scrollTo(section, {
+        smooth: true,
+        duration: 500,
+        offset: -70,
+      });
+    }, 100);
+  };
+
   return (
     <div className="header-links">
-      <NavLink to="/home" className={activeLink === 'home' ? 'active' : ''} onClick={() => handleSetActive('home')}>Home</NavLink>
-      <ScrollLink 
-        to="sobre" 
-        smooth={true} 
-        duration={500} 
-        offset={-70}
-        className={activeLink === 'sobre' ? 'active' : ''}
-        onSetActive={() => handleSetActive('sobre')}
+      <a
+        to="/home"
+        className={activeLink === "home" ? "active" : ""}
+        onClick={() => handleSetActive("home")}
+      >
+        Home
+      </a>
+      <a
+        className={activeLink === "sobre" ? "active" : ""}
+        onClick={() => handleNavigateAndScroll("/home", "sobre")}
       >
         Sobre
-      </ScrollLink>
-      <ScrollLink 
-        to="sabores" 
-        smooth={true} 
-        duration={500} 
-        offset={-70}
-        className={activeLink === 'sabores' ? 'active' : ''}
-        onSetActive={() => handleSetActive('sabores')}
+      </a>
+      <a
+        className={activeLink === "sabores" ? "active" : ""}
+        onClick={() => handleNavigateAndScroll("/home", "sabores")}
       >
         Sabores
-      </ScrollLink>
-      <ScrollLink 
-        to="contato" 
-        smooth={true} 
-        duration={500} 
-        offset={-70}
-        className={activeLink === 'contato' ? 'active' : ''}
-        onSetActive={() => handleSetActive('contato')}
+      </a>
+      <a
+        className={activeLink === "contato" ? "active" : ""}
+        onClick={() => handleNavigateAndScroll("/home", "contato")}
       >
         Contato
-      </ScrollLink>
-      <NavLink to="/criar-conta" className={activeLink === 'criar-conta' ? 'active' : ''} onClick={() => handleSetActive('criar-conta')}>
+      </a>
+      <NavLink
+        to="/criar-conta"
+        className={activeLink === "criar-conta" ? "active" : ""}
+        onClick={() => handleSetActive("criar-conta")}
+      >
         <FontAwesomeIcon icon={faUser} />
       </NavLink>
-      <NavLink to="/carrinho" className={activeLink === 'carrinho' ? 'active' : ''} onClick={() => handleSetActive('carrinho')}>
+      <NavLink
+        to="/carrinho"
+        className={activeLink === "carrinho" ? "active" : ""}
+        onClick={() => handleSetActive("carrinho")}
+      >
         <FontAwesomeIcon icon={faShoppingCart} />
       </NavLink>
     </div>

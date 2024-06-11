@@ -1,15 +1,14 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React from "react";
+import { NavLink as RouterNavLink } from "react-router-dom";
 
-const NavLink = ({ to, children }) => {
-  const location = useLocation();
-  const isActive = location.pathname === to;
-  
-  return (
-    <Link to={to} className={isActive ? "active" : ""}>
-      {children}
-    </Link>
-  );
-};
+const NavLink = ({ to, className, children, onClick }) => (
+  <RouterNavLink
+    to={to}
+    className={({ isActive }) => (isActive ? `${className} active` : className)}
+    onClick={onClick}
+  >
+    {children}
+  </RouterNavLink>
+);
 
 export default NavLink;

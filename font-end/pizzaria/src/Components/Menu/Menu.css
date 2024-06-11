@@ -83,7 +83,13 @@
   outline: none;
 }
 
-.header-links .active {
-  color: yellow;
+.header-links a {
+  color: white;
+  text-decoration: none;
+  margin-left: 1rem;
   cursor: pointer;
+}
+
+.header-links a.active {
+  color: yellow;
 }
