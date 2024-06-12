@@ -50,12 +50,12 @@ function Carrinho() {
 
   return (
     <div className="grid-container">
-      <h2>Listagem de Sabores no Carrinho</h2>
+      <h2>Meu Carrinho</h2>
       {erro && <p>{erro}</p>}
       <div className="grid">
         {pizzas.map((pizza) => (
           <div key={pizza.id} className="grid-item">
-            <h3>{pizza.tamanho}</h3>
+            <h3>Pizza {pizza.tamanho}</h3>
             {pizza.sabor1 && <p>Sabor 1: {pizza.sabor1}</p>}
             {pizza.sabor2 && <p>Sabor 2: {pizza.sabor2}</p>}
             {pizza.sabor3 && <p>Sabor 3: {pizza.sabor3}</p>}

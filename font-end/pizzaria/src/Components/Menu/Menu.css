@@ -55,13 +55,16 @@
   font-size: 1.2rem;
 }
 
-.header-links a {
+.header-links a,
+.header-links .nav-link {
   color: white;
   text-decoration: none;
   margin-left: 1rem;
+  cursor: pointer;
 }
 
-.header-links a.active {
+.header-links a.active,
+.header-links .nav-link.active {
   color: yellow;
 }
 
@@ -81,15 +84,4 @@
 
 .header-action-button:focus {
   outline: none;
-}
-
-.header-links a {
-  color: white;
-  text-decoration: none;
-  margin-left: 1rem;
-  cursor: pointer;
-}
-
-.header-links a.active {
-  color: yellow;
 }

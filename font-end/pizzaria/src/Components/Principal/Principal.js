@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "./Principal.css";
 
 const VideoBackground = () => {
@@ -34,6 +35,7 @@ const TextOverlay = () => {
       <p className="welcome">Welcome</p>
       <h2>Bem-vindo à nossa pizzaria!</h2>
       <p>Não perca essa chance de ter um belo jantar! Realize seu carrinho abaixo</p>
+      <Link to="/montar-pizza" className="montar-pizza-button">Monte sua pizza</Link>
     </div>
   );
 };

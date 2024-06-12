@@ -1,14 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { scroller } from "react-scroll";
-import NavLink from "./NavLink";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate, useLocation } from "react-router-dom";
 
 const NavigationLinks = () => {
   const [activeLink, setActiveLink] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === "/home" && !activeLink) {
+      setActiveLink("home");
+    }
+  }, [location, activeLink]);
 
   const handleSetActive = (link) => {
     setActiveLink(link);
@@ -16,7 +21,7 @@ const NavigationLinks = () => {
 
   const handleNavigateAndScroll = (path, section) => {
     navigate(path);
-    setActiveLink(section);
+    handleSetActive(section);
     setTimeout(() => {
       scroller.scrollTo(section, {
         smooth: true,
@@ -28,46 +33,53 @@ const NavigationLinks = () => {
 
   return (
     <div className="header-links">
-      <NavLink
-       to="/home"
-       className={activeLink === "home" ? "active" : ""}
-       onClick={() => handleSetActive("home")}
+      <Link
+        to="/home"
+        className={activeLink === "home" ? "active" : ""}
+        onClick={() => handleSetActive("home")}
       >
         Home
-      </NavLink>
+      </Link>
       <a
         className={activeLink === "sobre" ? "active" : ""}
         onClick={() => handleNavigateAndScroll("/home", "sobre")}
       >
         Sobre
       </a>
-      <NavLink
-         to="/menu"
-         className={activeLink === "menu" ? "active" : ""}
-         onClick={() => handleSetActive("menu")}
-      >
-        Menu
-      </NavLink>
       <a
         className={activeLink === "contato" ? "active" : ""}
         onClick={() => handleNavigateAndScroll("/home", "contato")}
       >
         Contato
       </a>
-      <NavLink
+      <Link
+        to="/menu"
+        className={activeLink === "menu" ? "active" : ""}
+        onClick={() => handleSetActive("menu")}
+      >
+        Menu
+      </Link>
+      <Link
+        to="/montar-pizza"
+        className={activeLink === "montar-pizza" ? "active" : ""}
+        onClick={() => handleSetActive("montar-pizza")}
+      >
+        Fazer pedido
+      </Link>
+      <Link
         to="/criar-conta"
         className={activeLink === "criar-conta" ? "active" : ""}
         onClick={() => handleSetActive("criar-conta")}
       >
         <FontAwesomeIcon icon={faUser} />
-      </NavLink>
-      <NavLink
+      </Link>
+      <Link
         to="/carrinho"
         className={activeLink === "carrinho" ? "active" : ""}
         onClick={() => handleSetActive("carrinho")}
       >
         <FontAwesomeIcon icon={faShoppingCart} />
-      </NavLink>
+      </Link>
     </div>
   );
 };
