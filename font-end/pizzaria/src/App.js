@@ -67,9 +67,9 @@ function App() {
               }
             />
              <Route
-              path="/menu"
+              path="/sabores"
               element={
-                <div id="menu">
+                <div id="sabores">
                   <LayoutListarPizza />
                 </div>
               }

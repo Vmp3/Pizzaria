@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import './MontarPizza.css';
 
 function MontarPizza() {
@@ -9,6 +10,8 @@ function MontarPizza() {
   const [mensagem, setMensagem] = useState('');
   const [erro, setErro] = useState(null);
   const [saboresDisponiveis, setSaboresDisponiveis] = useState([]);
+  const [showDialog, setShowDialog] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchSaboresDisponiveis = async () => {
@@ -81,17 +84,29 @@ function MontarPizza() {
       // Limpar qualquer erro anterior e definir a mensagem de sucesso
       setErro(null);
       setMensagem('Pedido concluído e salvo com sucesso!');
+      setShowDialog(true);
     } catch (error) {
       // Em caso de erro, definir a mensagem de erro
       setErro('Erro ao concluir pedido: ' + error.message);
       setMensagem('');
     }
   };
-  
-  
+
+  const handleMontarOutraPizza = () => {
+    setShowDialog(false);
+    setTamanho('');
+    setNumSabores(0);
+    setSabores(Array.from({ length: 3 }, () => ''));
+    setMensagem('');
+    setErro(null);
+  };
+
+  const handleIrParaCarrinho = () => {
+    navigate('/carrinho');
+  };
 
   return (
-    <div>
+    <div className="montar-pizza-container">
       <h2>Montar Pizza</h2>
       {erro && <p className="error-message">{erro}</p>}
       {mensagem && <p className="mensagem">{mensagem}</p>}
@@ -109,7 +124,7 @@ function MontarPizza() {
           <div>
             <label>Número de sabores:</label>
             <select value={numSabores} onChange={handleNumSaboresChange} required>
-              <option value="">Selecione a quantidade</option>
+              <option value="">Selecione o número de sabores</option>
               {[...(tamanho === 'Média' ? [1, 2] : tamanho === 'Grande' ? [1, 2, 3] : [1])].map((num) => (
                 <option key={num} value={num}>{num}</option>
               ))}
@@ -121,7 +136,6 @@ function MontarPizza() {
             {Array.from({ length: numSabores }, (_, index) => (
               <div key={index}>
                 <label>{`Sabor ${index + 1}:`}</label>
-              
                 <select value={sabores[index] || ''} onChange={(e) => handleSaborChange(index, e)} required>
                   <option value="">Selecione o sabor</option>
                   {saboresDisponiveis.map((pizza) => (
@@ -134,6 +148,16 @@ function MontarPizza() {
         )}
         <button type="submit">Enviar Carrinho</button>
       </form>
+      
+      {showDialog && (
+        <div className="dialog-overlay">
+          <div className="dialog-box">
+            <p>Pizza adicionada ao carrinho!</p>
+            <button onClick={handleMontarOutraPizza}>Montar outra pizza</button>
+            <button onClick={handleIrParaCarrinho}>Ir para o carrinho</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

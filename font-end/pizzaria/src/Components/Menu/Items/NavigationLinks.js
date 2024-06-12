@@ -53,11 +53,11 @@ const NavigationLinks = () => {
         Contato
       </a>
       <Link
-        to="/menu"
-        className={activeLink === "menu" ? "active" : ""}
-        onClick={() => handleSetActive("menu")}
+        to="/sabores"
+        className={activeLink === "sabores" ? "active" : ""}
+        onClick={() => handleSetActive("sabores")}
       >
-        Menu
+        Sabores
       </Link>
       <Link
         to="/montar-pizza"
