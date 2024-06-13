@@ -112,7 +112,7 @@ function MontarPizza() {
       {mensagem && <p className="mensagem">{mensagem}</p>}
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Tamanho:</label>
+          <label>Tamanho:  </label>
           <select value={tamanho} onChange={handleTamanhoChange} required>
             <option value="">Selecione o tamanho</option>
             <option value="Pequena">Pequena</option>
@@ -122,7 +122,7 @@ function MontarPizza() {
         </div>
         {tamanho && (
           <div>
-            <label>Número de sabores:</label>
+            <label>Número de sabores:  </label>
             <select value={numSabores} onChange={handleNumSaboresChange} required>
               <option value="">Selecione o número de sabores</option>
               {[...(tamanho === 'Média' ? [1, 2] : tamanho === 'Grande' ? [1, 2, 3] : [1])].map((num) => (
@@ -135,9 +135,9 @@ function MontarPizza() {
           <div>
             {Array.from({ length: numSabores }, (_, index) => (
               <div key={index}>
-                <label>{`Sabor ${index + 1}:`}</label>
+                <label>{`Sabor ${index + 1}:  `}</label>
                 <select value={sabores[index] || ''} onChange={(e) => handleSaborChange(index, e)} required>
-                  <option value="">Selecione o sabor</option>
+                  <option value="">Selecione o sabor  </option>
                   {saboresDisponiveis.map((pizza) => (
                     <option key={pizza.id} value={pizza.titulo}>{pizza.titulo}</option>
                   ))}
