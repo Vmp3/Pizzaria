@@ -33,14 +33,10 @@ function Carrinho() {
 
   const handleRemovePizza = async (id) => {
     try {
-      console.log('ID do item sendo removido:', id); // Adiciona o console.log para exibir o ID
-      // Remover do banco de dados
       await axios.delete(`http://localhost:8080/carrinho/remover/${id}`);
-      
-      // Filtra as pizzas removendo apenas a que possui o ID correspondente
+
       const updatedPizzas = pizzas.filter((pizza) => pizza.id !== id);
-      
-      // Atualiza o estado e o localStorage com as pizzas filtradas
+
       setPizzas(updatedPizzas);
       localStorage.setItem('carrinho', JSON.stringify(updatedPizzas));
     } catch (error) {
@@ -49,12 +45,12 @@ function Carrinho() {
   };
 
   return (
-    <div className="grid-container">
+    <div className="carrinho-grid-container">
       <h2>Meu Carrinho</h2>
       {erro && <p>{erro}</p>}
-      <div className="grid">
+      <div className="carrinho-grid">
         {pizzas.map((pizza) => (
-          <div key={pizza.id} className="grid-item">
+          <div key={pizza.id} className="carrinho-grid-item">
             <h3>Pizza {pizza.tamanho}</h3>
             {pizza.sabor1 && <p>Sabor 1: {pizza.sabor1}</p>}
             {pizza.sabor2 && <p>Sabor 2: {pizza.sabor2}</p>}

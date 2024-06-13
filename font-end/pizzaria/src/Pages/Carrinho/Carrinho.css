@@ -1,25 +1,55 @@
 .carrinho-grid-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .carrinho-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  
-  .carrinho-grid-item {
-    border: 1px solid #ccc;
-    margin: 10px;
-    padding: 10px;
-    text-align: center;
-  }
-  
-  .carrinho-pizza-image {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.carrinho-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.carrinho-grid-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid #ccc;
+  margin: 10px;
+  padding: 10px;
+  text-align: center;
+  width: 200px;
+  height: 250px; /* Definindo uma altura fixa */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  transition: transform 0.2s;
+}
+
+.carrinho-grid-item:hover {
+  transform: scale(1.05);
+}
+
+.carrinho-grid-item h3 {
+  font-size: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+.carrinho-grid-item p {
+  margin: 0.5rem 0;
+}
+
+.carrinho-grid-item button {
+  margin-top: auto; /* Adiciona espaço automático em cima para empurrar o botão para o fundo */
+  padding: 10px 20px;
+  background-color: orange;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.carrinho-grid-item button:hover {
+  background-color: darkorange;
+}
