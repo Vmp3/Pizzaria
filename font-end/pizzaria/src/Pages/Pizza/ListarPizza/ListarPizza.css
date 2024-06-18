@@ -67,6 +67,14 @@
   color: #ccc;
 }
 
+.pizza-valor {
+  color: #ccc;
+}
+
+.pizza-tamanho {
+  color: #ccc;
+}
+
 .error-message {
   text-align: center;
   color: red;

@@ -6,7 +6,7 @@ import './MontarPizza.css';
 function MontarPizza() {
   const [tamanho, setTamanho] = useState('');
   const [numSabores, setNumSabores] = useState(0);
-  const [sabores, setSabores] = useState(Array.from({ length: 3 }, () => ''));
+  const [sabores, setSabores] = useState([]);
   const [mensagem, setMensagem] = useState('');
   const [erro, setErro] = useState(null);
   const [saboresDisponiveis, setSaboresDisponiveis] = useState([]);
@@ -16,7 +16,7 @@ function MontarPizza() {
   useEffect(() => {
     const fetchSaboresDisponiveis = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/pizzas/listar');
+        const response = await axios.get('http://localhost:8080/sabores/listar');
         setSaboresDisponiveis(response.data);
       } catch (error) {
         setErro('Erro ao buscar sabores de pizzas: ' + error.message);
@@ -30,63 +30,62 @@ function MontarPizza() {
     const selectedTamanho = event.target.value;
     setTamanho(selectedTamanho);
     setNumSabores(0);
-    setSabores(Array.from({ length: 3 }, () => ''));
+    setSabores([]);
   };
 
   const handleNumSaboresChange = (event) => {
     const selectedNumSabores = parseInt(event.target.value);
     setNumSabores(selectedNumSabores);
-    setSabores(Array.from({ length: selectedNumSabores }, () => ''));
+    setSabores(Array.from({ length: selectedNumSabores }, () => ({ id: '', sabor: '', valor: 0 })));
   };
 
   const handleSaborChange = (index, event) => {
-    const newSabores = [...sabores];
-    newSabores[index] = event.target.value;
-    setSabores(newSabores);
+    const selectedIdSabor = event.target.value;
+    console.log('ID do Sabor Selecionado:', selectedIdSabor);
+
+    // Encontrar o sabor na lista saboresDisponiveis pelo id
+    const sabor = saboresDisponiveis.find(s => s.idsabor === parseInt(selectedIdSabor, 10));
+
+    if (sabor) {
+      console.log('Sabor Encontrado:', sabor);
+      const newSabores = [...sabores];
+      newSabores[index] = {
+        id: selectedIdSabor,
+        sabor: sabor.sabor,
+        valor: sabor.valor
+      };
+      setSabores(newSabores);
+    } else {
+      console.error(`Sabor com id ${selectedIdSabor} não encontrado.`);
+      setErro(`Sabor com id ${selectedIdSabor} não encontrado.`);
+    }
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    let valorTotal = 0;
-    if (tamanho === 'Pequena') {
-      valorTotal = 69;
-    } else if (tamanho === 'Média') {
-      valorTotal = 89;
-    } else if (tamanho === 'Grande') {
-      valorTotal = 99;
+    if (!tamanho || numSabores === 0 || sabores.some(sabor => !sabor.id)) {
+      setErro('Por favor, selecione tamanho e sabores corretamente.');
+      return;
     }
-  
+
+    // Calcular o valor total da pizza
+    const valorTotal = sabores.reduce((acc, cur) => acc + cur.valor, 0);
+
     const carrinhoItem = {
       tamanho: tamanho,
-      sabor1: sabores[0] || null,
-      sabor2: sabores[1] || null,
-      sabor3: sabores[2] || null,
-      valor: valorTotal
+      sabores: sabores.map(sabor => ({ id: sabor.id, sabor: sabor.sabor, valor: sabor.valor })),
+      valor: valorTotal,
     };
-  
+
     try {
-      // Salvar o carrinho no localStorage antes de enviar para o servidor
       const carrinhoAtual = JSON.parse(localStorage.getItem('carrinho')) || [];
       const novoCarrinho = [...carrinhoAtual, carrinhoItem];
       localStorage.setItem('carrinho', JSON.stringify(novoCarrinho));
-  
-      // Salvar o carrinho no servidor e receber o ID gerado
-      const response = await axios.post('http://localhost:8080/carrinho/adicionar', carrinhoItem);
-      const idPizzaSalva = response.data; // ID da pizza salva
-  
-      console.log('ID da pizza salva:', idPizzaSalva);
-  
-      // Adicionar o ID à pizza antes de salvar no localStorage
-      const pizzaComID = { ...carrinhoItem, id: idPizzaSalva };
-      const novoCarrinhoComID = [...carrinhoAtual, pizzaComID];
-      localStorage.setItem('carrinho', JSON.stringify(novoCarrinhoComID));
-  
-      // Limpar qualquer erro anterior e definir a mensagem de sucesso
+
       setErro(null);
       setMensagem('Pedido concluído e salvo com sucesso!');
       setShowDialog(true);
     } catch (error) {
-      // Em caso de erro, definir a mensagem de erro
       setErro('Erro ao concluir pedido: ' + error.message);
       setMensagem('');
     }
@@ -96,7 +95,7 @@ function MontarPizza() {
     setShowDialog(false);
     setTamanho('');
     setNumSabores(0);
-    setSabores(Array.from({ length: 3 }, () => ''));
+    setSabores([]);
     setMensagem('');
     setErro(null);
   };
@@ -122,10 +121,10 @@ function MontarPizza() {
         </div>
         {tamanho && (
           <div>
-            <label>Número de sabores:  </label>
+            <label>Número de sabores (1 ou 2):  </label>
             <select value={numSabores} onChange={handleNumSaboresChange} required>
               <option value="">Selecione o número de sabores</option>
-              {[...(tamanho === 'Média' ? [1, 2] : tamanho === 'Grande' ? [1, 2, 3] : [1])].map((num) => (
+              {[1, 2].map(num => (
                 <option key={num} value={num}>{num}</option>
               ))}
             </select>
@@ -136,10 +135,10 @@ function MontarPizza() {
             {Array.from({ length: numSabores }, (_, index) => (
               <div key={index}>
                 <label>{`Sabor ${index + 1}:  `}</label>
-                <select value={sabores[index] || ''} onChange={(e) => handleSaborChange(index, e)} required>
+                <select value={sabores[index]?.id || ''} onChange={(e) => handleSaborChange(index, e)} required>
                   <option value="">Selecione o sabor  </option>
-                  {saboresDisponiveis.map((pizza) => (
-                    <option key={pizza.id} value={pizza.titulo}>{pizza.titulo}</option>
+                  {saboresDisponiveis.map((sabor) => (
+                    <option key={sabor.idsabor} value={sabor.idsabor}>{sabor.sabor}</option>
                   ))}
                 </select>
               </div>

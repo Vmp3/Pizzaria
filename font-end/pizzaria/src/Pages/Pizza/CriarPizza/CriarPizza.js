@@ -7,8 +7,10 @@ import "./CriarPizza.css";
 function PizzaForm() {
   const [pizza, setPizza] = useState({
     imagem: "",
-    titulo: "",
+    sabor: "",
     descricao: "",
+    valor: "",
+    tamanho: ""  // Adicione os campos necessários conforme seu modelo no backend
   });
   const [mensagem, setMensagem] = useState("");
 
@@ -23,15 +25,23 @@ function PizzaForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8080/pizzas/adicionar", pizza);
+      const response = await axios.post("http://localhost:8080/sabores/adicionar", pizza);
       console.log(response.data);
-      setMensagem("Pizza adicionada com sucesso!");
+      setMensagem("Sabor de pizza adicionado com sucesso!");
+      // Limpar o formulário após adicionar com sucesso, se necessário
+      setPizza({
+        imagem: "",
+        sabor: "",
+        descricao: "",
+        valor: "",
+        tamanho: ""
+      });
     } catch (error) {
-      console.error("Erro ao adicionar pizza:", error);
+      console.error("Erro ao adicionar sabor de pizza:", error);
       if (error.response) {
-        setMensagem("Erro ao adicionar pizza: " + error.response.data);
+        setMensagem("Erro ao adicionar sabor de pizza: " + error.response.data);
       } else {
-        setMensagem("Erro ao adicionar pizza: " + error.message);
+        setMensagem("Erro ao adicionar sabor de pizza: " + error.message);
       }
     }
   };
@@ -43,16 +53,16 @@ function PizzaForm() {
         <CustomInput
           type="text"
           name="imagem"
-          placeholder="Imagem"
+          placeholder="Imagem URL"
           value={pizza.imagem}
           onChange={handleChange}
           required
         />
         <CustomInput
           type="text"
-          name="titulo"
-          placeholder="Título"
-          value={pizza.titulo}
+          name="sabor"
+          placeholder="Sabor"
+          value={pizza.sabor}
           onChange={handleChange}
           required
         />
@@ -64,6 +74,28 @@ function PizzaForm() {
           onChange={handleChange}
           required
         />
+        <CustomInput
+          type="text"
+          name="valor"
+          placeholder="Valor"
+          value={pizza.valor}
+          onChange={handleChange}
+          required
+        />
+        <div>
+          <label>Tamanho:</label>
+          <select
+            name="tamanho"
+            value={pizza.tamanho}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Selecione o tamanho</option>
+            <option value="Pequena">Pequena</option>
+            <option value="Média">Média</option>
+            <option value="Grande">Grande</option>
+          </select>
+        </div>
         <CustomButton text="Adicionar Sabor" />
       </form>
       <p className="mensagem">{mensagem}</p>
