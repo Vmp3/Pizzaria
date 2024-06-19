@@ -27,7 +27,7 @@ public class JdbcItemPedidoRepository implements ItemPedidoRepository {
              PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setLong(1, itemPedidoDTO.getPedido().getIdPedido());
-            statement.setLong(2, itemPedidoDTO.getSabor().getIdsabor());
+            statement.setLong(2, itemPedidoDTO.getSabor() != null ? itemPedidoDTO.getSabor().getIdsabor() : 0);
             statement.executeUpdate();
 
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {

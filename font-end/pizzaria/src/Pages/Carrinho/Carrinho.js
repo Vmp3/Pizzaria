@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './Carrinho.css'
+import './Carrinho.css';
 
 const Carrinho = () => {
   const [carrinho, setCarrinho] = useState([]);
+  const [erro, setErro] = useState(null); // Estado para armazenar mensagens de erro
 
   useEffect(() => {
     const fetchCarrinho = () => {
@@ -23,41 +24,43 @@ const Carrinho = () => {
 
   const finalizarPedido = async () => {
     try {
-      const response = await axios.post('http://localhost:8080/carrinho/adicionar', {
-        // Aqui você deve montar o objeto pedidoDTO com os dados necessários
-        // Exemplo básico de como montar o pedidoDTO, ajuste conforme sua lógica de negócio
-        cliente: { id: 1 }, // Supondo que você tenha o ID do cliente disponível
-        dataPedido: new Date(), // Data atual
-        status: 'PENDENTE', // Status inicial do pedido
-        total: calcularTotal(), // Função para calcular o total do carrinho
-        itensPedido: carrinho.map(item => ({
-          // Mapeia os itens do carrinho para o formato esperado pelo backend
-          // Ajuste conforme a estrutura de ItemPedidoRequestDTO no backend
-          quantidade: 1, // Exemplo de quantidade fixa
-          produto: { id: item.id }, // Supondo que cada item tenha um ID no seu sistema
-          valorUnitario: item.valor // Valor unitário do item
-        }))
-      });
-
-      // Aqui você pode tratar a resposta, exibir uma mensagem de sucesso, etc.
+      const itensPedido = carrinho.map(item => ({
+        idPedido: 1,
+        sabor: {
+          idsabor: item.sabores.map(sabor => sabor.id) // Mapear todos os ids de sabores
+        }
+      }));
+  
+      const pedido = {
+        idCliente: 1,
+        dataPedido: new Date().toISOString(),
+        status: 'PENDENTE',
+        total: calcularTotal(),
+        itensPedido: itensPedido
+      };
+  
+      console.log('Pedido enviado:', pedido);
+  
+      const response = await axios.post('http://localhost:8080/carrinho/adicionar', pedido);
+  
       console.log('Pedido finalizado com sucesso:', response.data);
-      // Limpar o carrinho local após finalizar o pedido
       localStorage.removeItem('carrinho');
       setCarrinho([]);
     } catch (error) {
-      console.error('Erro ao finalizar pedido:', error);
+      console.error('Erro ao finalizar pedido:', error.response); // Alterado para logar o erro detalhado
+      setErro('Erro ao finalizar pedido: ' + error.message); // Definindo a mensagem de erro no estado
     }
   };
+  
 
   const calcularTotal = () => {
-    // Implemente a lógica para calcular o total do carrinho
-    // Exemplo básico: soma dos valores de todos os itens
     return carrinho.reduce((total, item) => total + item.valor, 0);
   };
 
   return (
     <div className="carrinho-container">
       <h2>Carrinho de Compras</h2>
+      {erro && <p className="error-message">{erro}</p>} {/* Exibindo mensagem de erro se houver */}
       {carrinho.length === 0 ? (
         <p>O carrinho está vazio.</p>
       ) : (

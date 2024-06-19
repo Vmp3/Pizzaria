@@ -26,8 +26,10 @@ public class PedidoRequestDTO {
     @Column(name = "total")
     private BigDecimal total;
 
-    @Transient
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ItemPedidoRequestDTO> itensPedido;
+
+    // Getters e Setters
 
     public Long getIdPedido() {
         return idPedido;

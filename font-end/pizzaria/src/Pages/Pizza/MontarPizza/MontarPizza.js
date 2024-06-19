@@ -50,7 +50,7 @@ function MontarPizza() {
       console.log('Sabor Encontrado:', sabor);
       const newSabores = [...sabores];
       newSabores[index] = {
-        id: selectedIdSabor,
+        id: parseInt(selectedIdSabor, 10), // Convertendo para número inteiro
         sabor: sabor.sabor,
         valor: sabor.valor
       };

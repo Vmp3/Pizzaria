@@ -24,7 +24,7 @@ public class JdbcPedidoRepository implements PedidoRepository {
 
     @Override
     public void save(PedidoRequestDTO pedidoDTO) {
-        String sql = "INSERT INTO pedidos (idCliente, dataPedido, status, total) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO pedidos (id_cliente, data_pedido, status, total) VALUES (?, ?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -32,7 +32,7 @@ public class JdbcPedidoRepository implements PedidoRepository {
             statement.setLong(1, idCliente);
             statement.setTimestamp(2, Timestamp.valueOf(pedidoDTO.getDataPedido()));
             statement.setString(3, pedidoDTO.getStatus());
-            statement.setBigDecimal(4, pedidoDTO.getTotal()); // Utiliza setBigDecimal para BigDecimal
+            statement.setBigDecimal(4, pedidoDTO.getTotal());
 
             statement.executeUpdate();
 
@@ -45,8 +45,8 @@ public class JdbcPedidoRepository implements PedidoRepository {
             }
 
             for (ItemPedidoRequestDTO item : pedidoDTO.getItensPedido()) {
-                item.setPedido(pedidoDTO); // Associa o pedido ao item de pedido
-                itemPedidoRepository.save(item); // Salva o item de pedido
+                item.setPedido(pedidoDTO);
+                itemPedidoRepository.save(item);
             }
 
         } catch (SQLException e) {
