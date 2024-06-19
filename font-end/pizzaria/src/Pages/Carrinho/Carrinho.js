@@ -24,13 +24,20 @@ const Carrinho = () => {
 
   const finalizarPedido = async () => {
     try {
-      const itensPedido = carrinho.map(item => ({
-        idPedido: 1,
-        sabor: {
-          idsabor: item.sabores.map(sabor => sabor.id) // Mapear todos os ids de sabores
-        }
-      }));
-  
+      const itensPedido = [];
+
+      // Construir cada item do pedido no formato esperado pelo backend
+      carrinho.forEach(item => {
+        item.sabores.forEach(sabor => {
+          itensPedido.push({
+            idPedido: 1,
+            sabor: {
+              idsabor: sabor.id
+            }
+          });
+        });
+      });
+
       const pedido = {
         idCliente: 1,
         dataPedido: new Date().toISOString(),
