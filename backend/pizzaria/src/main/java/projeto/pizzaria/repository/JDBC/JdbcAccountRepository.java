@@ -149,4 +149,27 @@ public class JdbcAccountRepository implements AccountRepository {
         account.setSenha(resultSet.getString("senha"));
         return account;
     }
+
+    @Override
+    public Long getUserIdByCredentials(String cpf, String senha) {
+        String sql = "SELECT id FROM accounts WHERE cpf = ? AND senha = ?";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, cpf);
+            statement.setString(2, senha);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getLong("id");
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new IllegalStateException("Erro ao buscar ID do usuário por credenciais.", e);
+        }
+
+        return null;
+    }
+
 }

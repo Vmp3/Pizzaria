@@ -18,8 +18,6 @@ public class ItemPedidoRequestDTO {
     @JoinColumn(name = "id_sabor", nullable = false)
     private SaboresRequestDTO sabor;
 
-    // Getters e Setters
-
     public Long getIdItem() {
         return idItem;
     }

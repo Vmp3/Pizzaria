@@ -19,17 +19,15 @@ public class AccountController {
     @PostMapping("/criar-conta")
     public ResponseEntity<?> criarConta(@RequestBody AccountRequestDTO requestDTO) {
         try {
-            // Verifica se o CPF já está cadastrado
+
             if (accountRepository.cpfExists(requestDTO.getCpf())) {
                 return ResponseEntity.badRequest().body("CPF já está cadastrado.");
             }
 
-            // Verifica se o email já está cadastrado
             if (accountRepository.emailExists(requestDTO.getEmail())) {
                 return ResponseEntity.badRequest().body("Email já está cadastrado.");
             }
 
-            // Se passou pelas verificações, salva a conta
             accountRepository.save(requestDTO);
             return ResponseEntity.ok("Conta criada com sucesso!");
 
@@ -41,9 +39,9 @@ public class AccountController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDTO requestDTO) {
         try {
-            boolean isValid = accountRepository.verifyCredentials(requestDTO.getCpf(), requestDTO.getSenha());
-            if (isValid) {
-                return ResponseEntity.ok("Login realizado com sucesso!");
+            Long userId = accountRepository.getUserIdByCredentials(requestDTO.getCpf(), requestDTO.getSenha());
+            if (userId != null) {
+                return ResponseEntity.ok(userId);
             } else {
                 return ResponseEntity.status(401).body("Credenciais inválidas.");
             }
@@ -51,4 +49,5 @@ public class AccountController {
             return ResponseEntity.status(500).body("Erro ao realizar login: " + e.getMessage());
         }
     }
+
 }

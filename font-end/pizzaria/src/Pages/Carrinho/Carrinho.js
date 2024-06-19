@@ -4,15 +4,15 @@ import './Carrinho.css';
 
 const Carrinho = () => {
   const [carrinho, setCarrinho] = useState([]);
-  const [erro, setErro] = useState(null); // Estado para armazenar mensagens de erro
+  const [erro, setErro] = useState(null);
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
-    const fetchCarrinho = () => {
-      const carrinhoAtual = JSON.parse(localStorage.getItem('carrinho')) || [];
-      setCarrinho(carrinhoAtual);
-    };
+    const userIdFromStorage = localStorage.getItem('userId');
+    setUserId(userIdFromStorage);
 
-    fetchCarrinho();
+    const carrinhoAtual = JSON.parse(localStorage.getItem('carrinho')) || [];
+    setCarrinho(carrinhoAtual);
   }, []);
 
   const handleRemoverPizza = (index) => {
@@ -26,7 +26,6 @@ const Carrinho = () => {
     try {
       const itensPedido = [];
 
-      // Construir cada item do pedido no formato esperado pelo backend
       carrinho.forEach(item => {
         item.sabores.forEach(sabor => {
           itensPedido.push({
@@ -39,7 +38,7 @@ const Carrinho = () => {
       });
 
       const pedido = {
-        idCliente: 1,
+        idCliente: userId,
         dataPedido: new Date().toISOString(),
         status: 'PENDENTE',
         total: calcularTotal(),
@@ -54,11 +53,10 @@ const Carrinho = () => {
       localStorage.removeItem('carrinho');
       setCarrinho([]);
     } catch (error) {
-      console.error('Erro ao finalizar pedido:', error.response); // Alterado para logar o erro detalhado
-      setErro('Erro ao finalizar pedido: ' + error.message); // Definindo a mensagem de erro no estado
+      console.error('Erro ao finalizar pedido:', error.response);
+      setErro('Erro ao finalizar pedido: ' + error.message);
     }
   };
-  
 
   const calcularTotal = () => {
     return carrinho.reduce((total, item) => total + item.valor, 0);
@@ -67,7 +65,7 @@ const Carrinho = () => {
   return (
     <div className="carrinho-container">
       <h2>Carrinho de Compras</h2>
-      {erro && <p className="error-message">{erro}</p>} {/* Exibindo mensagem de erro se houver */}
+      {erro && <p className="error-message">{erro}</p>}
       {carrinho.length === 0 ? (
         <p>O carrinho está vazio.</p>
       ) : (

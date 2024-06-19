@@ -19,8 +19,6 @@ public class SaboresRequestDTO {
     private String tamanho;
     private String imagem;
 
-    // Construtores
-
     public SaboresRequestDTO() {
     }
 

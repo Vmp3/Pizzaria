@@ -43,14 +43,13 @@ function MontarPizza() {
     const selectedIdSabor = event.target.value;
     console.log('ID do Sabor Selecionado:', selectedIdSabor);
 
-    // Encontrar o sabor na lista saboresDisponiveis pelo id
     const sabor = saboresDisponiveis.find(s => s.idsabor === parseInt(selectedIdSabor, 10));
 
     if (sabor) {
       console.log('Sabor Encontrado:', sabor);
       const newSabores = [...sabores];
       newSabores[index] = {
-        id: parseInt(selectedIdSabor, 10), // Convertendo para número inteiro
+        id: parseInt(selectedIdSabor, 10),
         sabor: sabor.sabor,
         valor: sabor.valor
       };
@@ -68,7 +67,6 @@ function MontarPizza() {
       return;
     }
 
-    // Calcular o valor total da pizza
     const valorTotal = sabores.reduce((acc, cur) => acc + cur.valor, 0);
 
     const carrinhoItem = {

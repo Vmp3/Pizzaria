@@ -23,18 +23,16 @@ public class PedidoController {
     @PostMapping("/adicionar")
     public ResponseEntity<?> adicionarPedido(@RequestBody PedidoRequestDTO pedidoDTO) {
         try {
-            // Verifica se o idCliente está especificado
             if (pedidoDTO.getIdCliente() == null) {
                 return ResponseEntity.badRequest().body("Cliente não especificado para o pedido.");
             }
 
-            // Define a data do pedido como o momento atual, caso não esteja definido
             if (pedidoDTO.getDataPedido() == null) {
                 pedidoDTO.setDataPedido(LocalDateTime.now());
             }
 
             pedidoRepository.save(pedidoDTO);
-            return ResponseEntity.ok(pedidoDTO.getIdPedido()); // Retorna o ID gerado
+            return ResponseEntity.ok(pedidoDTO.getIdPedido());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Erro ao adicionar ao carrinho: " + e.getMessage());
@@ -66,7 +64,6 @@ public class PedidoController {
         }
 
         try {
-            // Verifica se o idCliente está especificado
             if (pedidoDTO.getIdCliente() == null) {
                 pedidoDTO.setIdCliente(1L);
             }

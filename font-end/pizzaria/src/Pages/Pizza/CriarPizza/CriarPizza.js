@@ -10,7 +10,7 @@ function PizzaForm() {
     sabor: "",
     descricao: "",
     valor: "",
-    tamanho: ""  // Adicione os campos necessários conforme seu modelo no backend
+    tamanho: ""
   });
   const [mensagem, setMensagem] = useState("");
 
@@ -28,7 +28,6 @@ function PizzaForm() {
       const response = await axios.post("http://localhost:8080/sabores/adicionar", pizza);
       console.log(response.data);
       setMensagem("Sabor de pizza adicionado com sucesso!");
-      // Limpar o formulário após adicionar com sucesso, se necessário
       setPizza({
         imagem: "",
         sabor: "",

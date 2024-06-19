@@ -22,8 +22,14 @@ function Login() {
         cpf,
         senha,
       });
-      console.log(response.data);
-      setMensagem("Login realizado com sucesso!");
+
+      if (response.status === 200) {
+        const userId = response.data;
+        localStorage.setItem('userId', userId);
+        setMensagem("Login realizado com sucesso!");
+      } else {
+        setMensagem("Erro ao fazer login.");
+      }
     } catch (error) {
       console.error("Erro ao fazer login:", error);
       if (error.response) {

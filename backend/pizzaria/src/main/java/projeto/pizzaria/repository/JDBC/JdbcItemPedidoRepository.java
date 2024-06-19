@@ -58,7 +58,6 @@ public class JdbcItemPedidoRepository implements ItemPedidoRepository {
                     ItemPedidoRequestDTO itemPedido = new ItemPedidoRequestDTO();
                     itemPedido.setIdItem(resultSet.getLong("id_item"));
 
-                    // Configurar o objeto SaboresRequestDTO
                     SaboresRequestDTO sabor = new SaboresRequestDTO();
                     sabor.setIdsabor(resultSet.getLong("id_sabor"));
                     sabor.setSabor(resultSet.getString("sabor"));
@@ -69,7 +68,6 @@ public class JdbcItemPedidoRepository implements ItemPedidoRepository {
 
                     itemPedido.setSabor(sabor);
 
-                    // Configurar o objeto PedidoRequestDTO
                     PedidoRequestDTO pedido = new PedidoRequestDTO();
                     pedido.setIdPedido(resultSet.getLong("id_pedido"));
 

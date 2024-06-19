@@ -9,4 +9,6 @@ public interface AccountRepository {
     AccountRequestDTO findById(Long id);
     boolean cpfExists(String cpf);
     boolean emailExists(String email);
+
+    Long getUserIdByCredentials(String cpf, String senha);
 }
