@@ -22,23 +22,22 @@ public class JdbcItemPedidoRepository implements ItemPedidoRepository {
 
     @Override
     public void save(ItemPedidoRequestDTO itemPedidoDTO) {
-        String sql = "INSERT INTO itens_pedido (id_pedido, id_sabor) VALUES (?, ?)";
+        String sql = "INSERT INTO itens_pedido (id_pedido, id_sabor, tipo) VALUES (?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setLong(1, itemPedidoDTO.getPedido().getIdPedido());
             statement.setLong(2, itemPedidoDTO.getSabor() != null ? itemPedidoDTO.getSabor().getIdsabor() : 0);
+            statement.setString(3, itemPedidoDTO.getTipo());
             statement.executeUpdate();
 
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     itemPedidoDTO.setIdItem(generatedKeys.getLong(1));
-                } else {
-                    throw new SQLException("Falha ao obter o ID gerado para o item de pedido.");
                 }
             }
         } catch (SQLException e) {
-            throw new IllegalStateException("Erro ao salvar item de pedido.", e);
+            throw new RuntimeException("Erro ao inserir item do pedido: " + e.getMessage(), e);
         }
     }
 

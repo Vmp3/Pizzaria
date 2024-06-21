@@ -36,26 +36,23 @@ function MontarPizza() {
   const handleNumSaboresChange = (event) => {
     const selectedNumSabores = parseInt(event.target.value);
     setNumSabores(selectedNumSabores);
-    setSabores(Array.from({ length: selectedNumSabores }, () => ({ id: '', sabor: '', valor: 0 })));
+    setSabores(Array.from({ length: selectedNumSabores }, () => ({ id: '', sabor: '', valor: 0, tipo: '' })));
   };
 
   const handleSaborChange = (index, event) => {
     const selectedIdSabor = event.target.value;
-    console.log('ID do Sabor Selecionado:', selectedIdSabor);
-
     const sabor = saboresDisponiveis.find(s => s.idsabor === parseInt(selectedIdSabor, 10));
 
     if (sabor) {
-      console.log('Sabor Encontrado:', sabor);
       const newSabores = [...sabores];
       newSabores[index] = {
         id: parseInt(selectedIdSabor, 10),
         sabor: sabor.sabor,
-        valor: sabor.valor
+        valor: sabor.valor,
+        tipo: numSabores === 1 ? 'Inteira' : 'Meia'
       };
       setSabores(newSabores);
     } else {
-      console.error(`Sabor com id ${selectedIdSabor} não encontrado.`);
       setErro(`Sabor com id ${selectedIdSabor} não encontrado.`);
     }
   };
@@ -71,7 +68,7 @@ function MontarPizza() {
 
     const carrinhoItem = {
       tamanho: tamanho,
-      sabores: sabores.map(sabor => ({ id: sabor.id, sabor: sabor.sabor, valor: sabor.valor })),
+      sabores: sabores,
       valor: valorTotal,
     };
 

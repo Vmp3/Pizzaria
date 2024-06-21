@@ -18,6 +18,8 @@ public class ItemPedidoRequestDTO {
     @JoinColumn(name = "id_sabor", nullable = false)
     private SaboresRequestDTO sabor;
 
+    private String tipo;
+
     public Long getIdItem() {
         return idItem;
     }
@@ -40,5 +42,13 @@ public class ItemPedidoRequestDTO {
 
     public void setSabor(SaboresRequestDTO sabor) {
         this.sabor = sabor;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 }

@@ -32,7 +32,8 @@ const Carrinho = () => {
             idPedido: 1,
             sabor: {
               idsabor: sabor.id
-            }
+            },
+            tipo: sabor.tipo
           });
         });
       });
@@ -74,7 +75,7 @@ const Carrinho = () => {
             <div key={index} className="carrinho-item">
               <h3>Pizza {item.tamanho}</h3>
               {item.sabores.map((sabor, saborIndex) => (
-                <p key={saborIndex}>Sabor {saborIndex + 1}: {sabor.sabor}</p>
+                <p key={saborIndex}>Sabor {saborIndex + 1}: {sabor.sabor} ({sabor.tipo})</p>
               ))}
               <p>Valor: {typeof item.valor === 'number' ? `R$ ${item.valor.toFixed(2)}` : 'Valor indisponível'}</p>
               <button onClick={() => handleRemoverPizza(index)}>Remover</button>
@@ -82,6 +83,7 @@ const Carrinho = () => {
           ))}
         </div>
       )}
+      <p>Total: R$ {calcularTotal().toFixed(2)}</p>
       <button onClick={finalizarPedido} disabled={carrinho.length === 0}>Finalizar Pedido</button>
     </div>
   );
