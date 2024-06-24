@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./criar-conta.css";
 import { formatCPF, formatCEP } from "../../Util/Utils";
@@ -13,6 +14,7 @@ function CriarConta() {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [cep, setCep] = useState("");
+    const navigate = useNavigate();
 
     const handleCpfChange = (event) => {
         const formattedCpf = formatCPF(event.target.value);
@@ -41,15 +43,25 @@ function CriarConta() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+       
+        const trimmedNome = nome.trim();
+        const trimmedNumero = numero.trim();
+        const trimmedSenha = senha.trim();
+ 
+        if (trimmedNome === "" || trimmedNumero === "" || trimmedSenha === "") {
+            alert("Por favor, preencha todos os campos corretamente.");
+            return;
+        }
+ 
         try {
             const response = await axios.post("http://localhost:8080/criar-conta", {
                 cpf,
-                nome,
+                nome: trimmedNome,
                 cep,
                 endereco,
-                numero,
+                numero: trimmedNumero,
                 email,
-                senha,
+                senha: trimmedSenha,
             });
             console.log(response.data);
             alert("Conta criada com sucesso!");
@@ -61,6 +73,9 @@ function CriarConta() {
                 alert("Erro ao criar conta: " + error.message);
             }
         }
+    };
+    const handleLoginRedirect = () => {
+        navigate("/login");
     };
 
     return (
@@ -118,8 +133,9 @@ function CriarConta() {
                     onChange={(e) => setSenha(e.target.value)}
                     required
                 />
-                <CustomButton type="submit" text="Criar Conta" />
+                <CustomButton type="submit" text="Criar Conta" className="custom-button" />
             </form>
+            <CustomButton type="submit" text="Já tem uma conta? Faça seu login" onClick={handleLoginRedirect} className="custom-button" />
         </div>
     );
 }

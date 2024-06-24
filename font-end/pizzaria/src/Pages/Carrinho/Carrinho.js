@@ -1,31 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Carrinho.css';
-
+ 
 const Carrinho = () => {
   const [carrinho, setCarrinho] = useState([]);
   const [erro, setErro] = useState(null);
   const [userId, setUserId] = useState(null);
-
+ 
   useEffect(() => {
     const userIdFromStorage = localStorage.getItem('userId');
     setUserId(userIdFromStorage);
-
+ 
     const carrinhoAtual = JSON.parse(localStorage.getItem('carrinho')) || [];
     setCarrinho(carrinhoAtual);
   }, []);
-
+ 
   const handleRemoverPizza = (index) => {
     const novoCarrinho = [...carrinho];
     novoCarrinho.splice(index, 1);
     localStorage.setItem('carrinho', JSON.stringify(novoCarrinho));
     setCarrinho(novoCarrinho);
   };
-
+ 
   const finalizarPedido = async () => {
     try {
       const itensPedido = [];
-
+ 
       carrinho.forEach(item => {
         item.sabores.forEach(sabor => {
           itensPedido.push({
@@ -37,7 +37,7 @@ const Carrinho = () => {
           });
         });
       });
-
+ 
       const pedido = {
         idCliente: userId,
         dataPedido: new Date().toISOString(),
@@ -45,11 +45,11 @@ const Carrinho = () => {
         total: calcularTotal(),
         itensPedido: itensPedido
       };
-  
+ 
       console.log('Pedido enviado:', pedido);
-  
+ 
       const response = await axios.post('http://localhost:8080/carrinho/adicionar', pedido);
-  
+ 
       console.log('Pedido finalizado com sucesso:', response.data);
       localStorage.removeItem('carrinho');
       setCarrinho([]);
@@ -58,11 +58,11 @@ const Carrinho = () => {
       setErro('Erro ao finalizar pedido: ' + error.message);
     }
   };
-
+ 
   const calcularTotal = () => {
     return carrinho.reduce((total, item) => total + item.valor, 0);
   };
-
+ 
   return (
     <div className="carrinho-container">
       <h2>Carrinho de Compras</h2>
@@ -88,5 +88,5 @@ const Carrinho = () => {
     </div>
   );
 };
-
+ 
 export default Carrinho;

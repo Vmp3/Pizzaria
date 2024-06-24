@@ -99,6 +99,8 @@ function MontarPizza() {
     navigate('/carrinho');
   };
 
+  const filteredSabores = saboresDisponiveis.filter(sabor => sabor.tamanho === tamanho);
+
   return (
     <div className="montar-pizza-container">
       <h2>Montar Pizza</h2>
@@ -132,7 +134,7 @@ function MontarPizza() {
                 <label>{`Sabor ${index + 1}:  `}</label>
                 <select value={sabores[index]?.id || ''} onChange={(e) => handleSaborChange(index, e)} required>
                   <option value="">Selecione o sabor  </option>
-                  {saboresDisponiveis.map((sabor) => (
+                  {filteredSabores.map((sabor) => (
                     <option key={sabor.idsabor} value={sabor.idsabor}>{sabor.sabor}</option>
                   ))}
                 </select>
