@@ -64,7 +64,14 @@ function MontarPizza() {
       return;
     }
 
-    const valorTotal = sabores.reduce((acc, cur) => acc + cur.valor, 0);
+    let valorTotal = 0;
+    if (numSabores > 1) {
+      // Pegar o maior valor entre os sabores
+      valorTotal = Math.max(...sabores.map(sabor => sabor.valor));
+    } else {
+      // Somar valores dos sabores para pizzas inteiras
+      valorTotal = sabores.reduce((acc, cur) => acc + cur.valor, 0);
+    }
 
     const carrinhoItem = {
       tamanho: tamanho,

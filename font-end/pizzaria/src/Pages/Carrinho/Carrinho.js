@@ -1,31 +1,44 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import './Carrinho.css';
- 
+import CustomButton from '../../Util/CustomButton';
+
 const Carrinho = () => {
   const [carrinho, setCarrinho] = useState([]);
   const [erro, setErro] = useState(null);
   const [userId, setUserId] = useState(null);
- 
+  const navigate = useNavigate();
+
   useEffect(() => {
     const userIdFromStorage = localStorage.getItem('userId');
     setUserId(userIdFromStorage);
- 
+
     const carrinhoAtual = JSON.parse(localStorage.getItem('carrinho')) || [];
     setCarrinho(carrinhoAtual);
   }, []);
- 
+
   const handleRemoverPizza = (index) => {
     const novoCarrinho = [...carrinho];
     novoCarrinho.splice(index, 1);
     localStorage.setItem('carrinho', JSON.stringify(novoCarrinho));
     setCarrinho(novoCarrinho);
   };
- 
+
   const finalizarPedido = async () => {
+    if (carrinho.length === 0) {
+      setErro('Não há itens no carrinho para finalizar o pedido.');
+      return;
+    }
+
+    if (!userId) {
+      setErro('Cliente não especificado para o pedido, realize seu login.');
+      return;
+    }
+
     try {
       const itensPedido = [];
- 
+
       carrinho.forEach(item => {
         item.sabores.forEach(sabor => {
           itensPedido.push({
@@ -37,7 +50,7 @@ const Carrinho = () => {
           });
         });
       });
- 
+
       const pedido = {
         idCliente: userId,
         dataPedido: new Date().toISOString(),
@@ -45,29 +58,37 @@ const Carrinho = () => {
         total: calcularTotal(),
         itensPedido: itensPedido
       };
- 
-      console.log('Pedido enviado:', pedido);
- 
+
       const response = await axios.post('http://localhost:8080/carrinho/adicionar', pedido);
- 
-      console.log('Pedido finalizado com sucesso:', response.data);
-      localStorage.removeItem('carrinho');
-      setCarrinho([]);
+
+      if (response.status === 200) {
+        const transactionId = response.data.transactionId;
+        const deliveryTime = response.data.deliveryTime;
+
+        localStorage.removeItem('carrinho');
+        setCarrinho([]);
+
+        navigate('/pedidoConcluido', { state: { total: calcularTotal(), transactionId, deliveryTime } });
+      } else {
+        // Caso a resposta não tenha status 200, exibe mensagem de erro
+        console.error('Erro ao finalizar pedido:', response);
+        setErro('Erro ao finalizar pedido: A resposta do servidor não foi bem sucedida.');
+      }
     } catch (error) {
-      console.error('Erro ao finalizar pedido:', error.response);
+      console.error('Erro ao finalizar pedido:', error);
       setErro('Erro ao finalizar pedido: ' + error.message);
     }
   };
- 
+
   const calcularTotal = () => {
     return carrinho.reduce((total, item) => total + item.valor, 0);
   };
- 
+
   return (
     <div className="carrinho-container">
       <h2>Carrinho de Compras</h2>
       {erro && <p className="error-message">{erro}</p>}
-      {carrinho.length === 0 ? (
+      {carrinho === null || carrinho.length === 0 ? (
         <p>O carrinho está vazio.</p>
       ) : (
         <div className="carrinho-items">
@@ -84,9 +105,9 @@ const Carrinho = () => {
         </div>
       )}
       <p>Total: R$ {calcularTotal().toFixed(2)}</p>
-      <button onClick={finalizarPedido} disabled={carrinho.length === 0}>Finalizar Pedido</button>
+      <CustomButton onClick={finalizarPedido} disabled={carrinho === null || carrinho.length === 0} text="Finalizar Pedido"></CustomButton>
     </div>
   );
 };
- 
+
 export default Carrinho;
