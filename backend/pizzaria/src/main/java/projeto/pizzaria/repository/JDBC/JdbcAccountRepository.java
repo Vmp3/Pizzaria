@@ -53,6 +53,28 @@ public class JdbcAccountRepository implements AccountRepository {
     }
 
     @Override
+    public void update(AccountRequestDTO usuarioExistente) {
+        String sql = "UPDATE accounts SET cep = ?, endereco = ?, numero = ? WHERE id = ?";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, usuarioExistente.getCep());
+            statement.setString(2, usuarioExistente.getEndereco());
+            statement.setString(3, usuarioExistente.getNumero());
+            statement.setLong(4, usuarioExistente.getId());
+
+            int rowsUpdated = statement.executeUpdate();
+            if (rowsUpdated == 0) {
+                throw new IllegalStateException("Falha ao atualizar o usuário. Nenhum registro atualizado.");
+            }
+
+        } catch (SQLException e) {
+            throw new IllegalStateException("Erro ao atualizar usuário.", e);
+        }
+    }
+
+
+    @Override
     public boolean verifyCredentials(String cpf, String senha) {
         String sql = "SELECT COUNT(*) FROM accounts WHERE cpf = ? AND senha = ?";
         try (Connection connection = dataSource.getConnection();

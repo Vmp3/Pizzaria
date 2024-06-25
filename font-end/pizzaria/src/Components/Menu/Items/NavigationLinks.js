@@ -31,6 +31,16 @@ const NavigationLinks = () => {
     }, 100);
   };
 
+  const handleUserIconClick = () => {
+    const userId = localStorage.getItem("userId");
+    if (userId) {
+      navigate("/atualizarInformacoes");
+    } else {
+      navigate("/criar-conta");
+      handleSetActive("criar-conta");
+    }
+  };
+
   return (
     <div className="header-links">
       <Link
@@ -67,8 +77,8 @@ const NavigationLinks = () => {
         Fazer pedido
       </Link>
       <Link
-        to="/criar-conta"
-        className={activeLink === "criar-conta" ? "active" : ""}
+        to={localStorage.getItem("userId") ? "/atualizarInformacoes" : "/criar-conta"}
+        className={`user-icon ${activeLink === "criar-conta" ? "active" : ""}`}
         onClick={() => handleSetActive("criar-conta")}
       >
         <FontAwesomeIcon icon={faUser} />

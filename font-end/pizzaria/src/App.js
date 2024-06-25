@@ -11,8 +11,9 @@ import LayoutCriarPizza from "./Layout/LayoutCriarPizza";
 import LayoutListarPizza from "./Layout/LayoutListarPizza";
 import LayoutMontarPizza from "./Layout/LayoutMontarPizza";
 import Carrinho from "./Layout/LayoutCarrinho";
-import { scroller } from "react-scroll";
 import PedidoConcluido from "./Pages/Carrinho/PedidoConcluido/PedidoConcluido";
+import LayoutAtualizarInformacoes from "./Layout/LayoutAtualizarInformacoes"
+import { scroller } from "react-scroll";
 
 const ScrollToSection = () => {
   const location = useLocation();
@@ -82,6 +83,7 @@ function App() {
             <Route path="/montar-pizza" element={<LayoutMontarPizza />} />
             <Route path="/carrinho" element={<Carrinho />} />
             <Route path="/pedidoConcluido" element={<PedidoConcluido />} />
+            <Route path="/atualizarInformacoes" element={<LayoutAtualizarInformacoes />} />
           </Routes>
         </div>
       </Router>
