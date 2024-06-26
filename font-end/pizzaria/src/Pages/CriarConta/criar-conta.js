@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./criar-conta.css";
-import { formatCPF, formatCEP } from "../../Util/Utils";
+import { formatCPF } from "../../Util/Utils";
+import { handleCepChange } from "../../Util/CepUtil";
 import CustomInput from "../../Util/CustomInput";
 import CustomButton from "../../Util/CustomButton";
 
@@ -19,26 +20,6 @@ function CriarConta() {
     const handleCpfChange = (event) => {
         const formattedCpf = formatCPF(event.target.value);
         setCpf(formattedCpf);
-    };
-
-    const handleCepChange = async (event) => {
-        const newCep = formatCEP(event.target.value);
-        setCep(newCep);
-
-        if (newCep.length === 9) {
-            try {
-                const response = await axios.get(`https://viacep.com.br/ws/${newCep.replace("-", "")}/json/`);
-                const data = response.data;
-                if (!data.erro) {
-                    setEndereco(data.logradouro);
-                } else {
-                    setEndereco("");
-                    alert("CEP inválido");
-                }
-            } catch (error) {
-                console.error("Erro ao buscar CEP:", error);
-            }
-        }
     };
 
     const handleSubmit = async (event) => {
@@ -74,6 +55,7 @@ function CriarConta() {
             }
         }
     };
+
     const handleLoginRedirect = () => {
         navigate("/login");
     };
@@ -100,7 +82,7 @@ function CriarConta() {
                     type="text"
                     placeholder="CEP"
                     value={cep}
-                    onChange={handleCepChange}
+                    onChange={(e) => handleCepChange(e, setCep, setEndereco)}
                     maxLength={9}
                     required
                 />

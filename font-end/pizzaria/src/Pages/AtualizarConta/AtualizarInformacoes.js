@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import "./AtualizarInformacoes.css";
-import CustomInput from "../../../Util/CustomInput";
-import CustomButton from "../../../Util/CustomButton";
-import { formatCEP } from "../../../Util/Utils";
+import CustomInput from "../../Util/CustomInput";
+import CustomButton from "../../Util/CustomButton";
+import { handleCepChange } from "../../Util/CepUtil";
 
 function EditarDadosUsuario() {
     const { id } = useParams();
@@ -13,7 +13,6 @@ function EditarDadosUsuario() {
     const [endereco, setEndereco] = useState('');
     const [numero, setNumero] = useState('');
 
-    // Obtém o id do usuário do localStorage
     const userId = localStorage.getItem('userId');
 
     useEffect(() => {
@@ -34,35 +33,23 @@ function EditarDadosUsuario() {
         }
     }, [userId]);
 
-    const handleCepChange = async (event) => {
-        const newCep = formatCEP(event.target.value);
-        setCep(newCep);
-
-        if (newCep.length === 9) {
-            try {
-                const response = await axios.get(`https://viacep.com.br/ws/${newCep.replace("-", "")}/json/`);
-                const data = response.data;
-                if (!data.erro) {
-                    setEndereco(data.logradouro);
-                } else {
-                    setEndereco("");
-                    alert("CEP inválido");
-                }
-            } catch (error) {
-                console.error("Erro ao buscar CEP:", error);
-            }
-        }
-    };
-
     const handleSubmit = async (event) => {
         event.preventDefault();
+
+        const trimmedEndereco = endereco.trim();
+        const trimmedNumero = numero.trim();
+
+        if (trimmedEndereco === "" || trimmedNumero === "") {
+            alert("Por favor, preencha todos os campos corretamente.");
+            return;
+        }
 
         try {
             const response = await axios.put(`http://localhost:8080/usuarios/${userId}/editar`, {
                 ...usuario,
                 cep,
-                endereco,
-                numero,
+                endereco: trimmedEndereco,
+                numero: trimmedNumero,
             });
             alert('Dados atualizados com sucesso!');
         } catch (error) {
@@ -100,7 +87,7 @@ function EditarDadosUsuario() {
                     type="text"
                     placeholder="CEP"
                     value={cep}
-                    onChange={handleCepChange}
+                    onChange={(e) => handleCepChange(e, setCep, setEndereco)}
                     maxLength={9}
                     required
                 />

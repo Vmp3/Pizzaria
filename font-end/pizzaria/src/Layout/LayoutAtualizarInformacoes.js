@@ -1,5 +1,5 @@
 import React from 'react';
-import AtualizarInformacoes from '../Pages/CriarConta/Atualizar/AtualizarInformacoes';
+import AtualizarInformacoes from '../Pages/AtualizarConta/AtualizarInformacoes';
 
 function EditarInformacoes() {
   return (

@@ -90,7 +90,7 @@ public class AccountController {
             usuarioExistente.setNumero(requestDTO.getNumero());
 
             logger.info("Dados do usuário antes da atualização: {}", usuarioExistente);
-            
+
             accountRepository.update(usuarioExistente);
 
             logger.info("Usuário atualizado com sucesso!");

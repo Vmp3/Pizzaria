@@ -29,7 +29,7 @@ function Login() {
         const userId = response.data;
         localStorage.setItem('userId', userId);
         setMensagem("Login realizado com sucesso!");
-        navigate("/home"); // Redireciona para a página inicial
+        navigate("/home");
       } else {
         setMensagem("Erro ao fazer login.");
       }
