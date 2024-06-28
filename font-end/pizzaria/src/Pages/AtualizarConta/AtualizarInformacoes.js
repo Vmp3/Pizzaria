@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { MdExitToApp } from "react-icons/md";
 import "./AtualizarInformacoes.css";
 import CustomInput from "../../Util/CustomInput";
 import CustomButton from "../../Util/CustomButton";
@@ -12,6 +13,7 @@ function EditarDadosUsuario() {
     const [cep, setCep] = useState('');
     const [endereco, setEndereco] = useState('');
     const [numero, setNumero] = useState('');
+    const navigate = useNavigate();
 
     const userId = localStorage.getItem('userId');
 
@@ -57,12 +59,20 @@ function EditarDadosUsuario() {
         }
     };
 
+    const handleLogout = () => {
+        localStorage.removeItem('userId');
+        navigate("/login");
+    };
+
     if (!usuario) {
         return <p>Carregando dados do usuário...</p>;
     }
 
     return (
         <div className="editar-dados-usuario-container">
+            <div className="logout-button" onClick={handleLogout}>
+                <MdExitToApp size={24} />
+            </div>
             <h2>Editar Dados do Usuário</h2>
             <form className="editar-dados-usuario-form" onSubmit={handleSubmit}>
                 <CustomInput

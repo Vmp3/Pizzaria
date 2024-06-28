@@ -46,6 +46,7 @@ function CriarConta() {
             });
             console.log(response.data);
             alert("Conta criada com sucesso!");
+            navigate("/login"); // Redireciona para a página de login após sucesso
         } catch (error) {
             console.error("Erro ao criar conta:", error);
             if (error.response && error.response.data) {
@@ -117,7 +118,7 @@ function CriarConta() {
                 />
                 <CustomButton type="submit" text="Criar Conta" className="custom-button" />
             </form>
-            <CustomButton type="submit" text="Já tem uma conta? Faça seu login" onClick={handleLoginRedirect} className="custom-button" />
+            <CustomButton type="button" text="Já tem uma conta? Faça seu login" onClick={handleLoginRedirect} className="custom-button" />
         </div>
     );
 }
