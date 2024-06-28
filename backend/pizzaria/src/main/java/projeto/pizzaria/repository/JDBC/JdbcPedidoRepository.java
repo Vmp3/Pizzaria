@@ -8,6 +8,9 @@ import projeto.pizzaria.repository.ItemPedidoRepository;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,11 +28,16 @@ public class JdbcPedidoRepository implements PedidoRepository {
     public void save(PedidoRequestDTO pedidoDTO) {
         String sql = "INSERT INTO pedidos (id_cliente, data_pedido, status, total) VALUES (?, ?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+                PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            ZoneId gmtMinus3 = ZoneId.of("America/Sao_Paulo");
+            LocalDateTime dataPedido = pedidoDTO.getDataPedido();
+            ZonedDateTime dataPedidoGMTMinus3 = dataPedido.atZone(ZoneId.systemDefault())
+                    .withZoneSameInstant(gmtMinus3);
 
             Long idCliente = pedidoDTO.getIdCliente() != null ? pedidoDTO.getIdCliente() : 1L;
             statement.setLong(1, idCliente);
-            statement.setTimestamp(2, Timestamp.valueOf(pedidoDTO.getDataPedido()));
+            statement.setTimestamp(2, Timestamp.valueOf(dataPedidoGMTMinus3.toLocalDateTime()));
             statement.setString(3, pedidoDTO.getStatus());
             statement.setBigDecimal(4, pedidoDTO.getTotal());
 
@@ -57,7 +65,7 @@ public class JdbcPedidoRepository implements PedidoRepository {
     public void update(PedidoRequestDTO pedidoDTO) {
         String sql = "UPDATE pedidos SET idCliente = ?, dataPedido = ?, status = ?, total = ? WHERE idPedido = ?";
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+                PreparedStatement statement = connection.prepareStatement(sql)) {
 
             Long idCliente = pedidoDTO.getIdCliente() != null ? pedidoDTO.getIdCliente() : 1L;
             statement.setLong(1, idCliente);
@@ -77,8 +85,8 @@ public class JdbcPedidoRepository implements PedidoRepository {
         List<PedidoRequestDTO> pedidos = new ArrayList<>();
         String sql = "SELECT * FROM pedidos";
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql);
-             ResultSet resultSet = statement.executeQuery()) {
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
                 PedidoRequestDTO pedido = mapResultSetToPedido(resultSet);
@@ -96,7 +104,7 @@ public class JdbcPedidoRepository implements PedidoRepository {
     public PedidoRequestDTO findById(Long idPedido) {
         String sql = "SELECT * FROM pedidos WHERE idPedido = ?";
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+                PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setLong(1, idPedido);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -117,7 +125,7 @@ public class JdbcPedidoRepository implements PedidoRepository {
     public void deleteById(Long idPedido) {
         String sql = "DELETE FROM pedidos WHERE idPedido = ?";
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+                PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setLong(1, idPedido);
             statement.executeUpdate();

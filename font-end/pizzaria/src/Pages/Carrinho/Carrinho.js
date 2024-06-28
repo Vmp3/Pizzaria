@@ -51,9 +51,14 @@ const Carrinho = () => {
         });
       });
 
+      // Converte a data do pedido para GMT-3
+      const datePedido = new Date();
+      const offsetGMTMinus3 = -3 * 60 * 60 * 1000; // GMT-3 offset in milliseconds
+      const dateGMTMinus3 = new Date(datePedido.getTime() + offsetGMTMinus3);
+
       const pedido = {
         idCliente: userId,
-        dataPedido: new Date().toISOString(),
+        dataPedido: dateGMTMinus3.toISOString(),
         status: 'PENDENTE',
         total: calcularTotal(),
         itensPedido: itensPedido
