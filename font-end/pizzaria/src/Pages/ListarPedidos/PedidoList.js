@@ -29,6 +29,11 @@ const PedidoList = () => {
                     <tr>
                         <th>ID Pedido</th>
                         <th>ID Cliente</th>
+                        <th>Nome Cliente</th>
+                        <th>CPF</th>
+                        <th>CEP</th>
+                        <th>Endereço</th>
+                        <th>Número</th>
                         <th>Data Pedido</th>
                         <th>Status</th>
                         <th>Total</th>
@@ -40,6 +45,11 @@ const PedidoList = () => {
                         <tr key={pedido.idPedido}>
                             <td>{pedido.idPedido}</td>
                             <td>{pedido.idCliente}</td>
+                            <td>{pedido.account ? pedido.account.nome : '-'}</td>
+                            <td>{pedido.account ? pedido.account.cpf : '-'}</td>
+                            <td>{pedido.account ? pedido.account.cep : '-'}</td>
+                            <td>{pedido.account ? pedido.account.endereco : '-'}</td>
+                            <td>{pedido.account ? pedido.account.numero : '-'}</td>
                             <td>{new Date(pedido.dataPedido).toLocaleString()}</td>
                             <td>{pedido.status}</td>
                             <td>{pedido.total}</td>

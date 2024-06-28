@@ -1,6 +1,7 @@
 package projeto.pizzaria.repository.JDBC;
 
 import org.springframework.stereotype.Repository;
+import projeto.pizzaria.model.AccountRequestDTO;
 import projeto.pizzaria.model.ItemPedidoRequestDTO;
 import projeto.pizzaria.model.PedidoRequestDTO;
 import projeto.pizzaria.model.SaboresRequestDTO;
@@ -95,17 +96,25 @@ public class JdbcPedidoRepository implements PedidoRepository {
                 "itens_pedido.id_item, " +
                 "itens_pedido.tipo, " +
                 "sabores.idsabor, " +
-                "sabores.sabor " +
+                "sabores.sabor, " +
+                "accounts.id as account_id, " +
+                "accounts.cpf as account_cpf, " +
+                "accounts.email as account_email, " +
+                "accounts.nome as account_nome, " +
+                "accounts.cep as account_cep, " +
+                "accounts.endereco as account_endereco, " +
+                "accounts.numero as account_numero " +
                 "FROM pedidos " +
                 "INNER JOIN itens_pedido ON pedidos.id_pedido = itens_pedido.id_pedido " +
                 "INNER JOIN sabores ON itens_pedido.id_sabor = sabores.idsabor " +
+                "INNER JOIN accounts ON pedidos.id_cliente = accounts.id " +
                 "ORDER BY pedidos.id_pedido, itens_pedido.id_item";
 
         try (Connection connection = dataSource.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ResultSet resultSet = statement.executeQuery()) {
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
 
-            Map<Long, PedidoRequestDTO> pedidosMap = new LinkedHashMap<>(); // Usando um LinkedHashMap para manter a ordem de inserção
+            Map<Long, PedidoRequestDTO> pedidosMap = new LinkedHashMap<>();
 
             while (resultSet.next()) {
                 Long idPedido = resultSet.getLong("id_pedido");
@@ -119,12 +128,19 @@ public class JdbcPedidoRepository implements PedidoRepository {
                     pedido.setStatus(resultSet.getString("status"));
                     pedido.setTotal(resultSet.getBigDecimal("total"));
                     pedido.setItensPedido(new ArrayList<>());
-                    pedidosMap.put(idPedido, pedido);
-                }
 
-                // Somente adiciona o total na primeira vez que encontra o pedido
-                if (pedido.getItensPedido().isEmpty()) {
-                    pedido.setTotal(resultSet.getBigDecimal("total"));
+                    AccountRequestDTO account = new AccountRequestDTO();
+                    account.setId(resultSet.getLong("account_id"));
+                    account.setCpf(resultSet.getString("account_cpf"));
+                    account.setEmail(resultSet.getString("account_email"));
+                    account.setNome(resultSet.getString("account_nome"));
+                    account.setCep(resultSet.getString("account_cep"));
+                    account.setEndereco(resultSet.getString("account_endereco"));
+                    account.setNumero(resultSet.getString("account_numero"));
+
+                    pedido.setAccount(account);
+
+                    pedidosMap.put(idPedido, pedido);
                 }
 
                 ItemPedidoRequestDTO itemPedido = new ItemPedidoRequestDTO();
@@ -146,7 +162,6 @@ public class JdbcPedidoRepository implements PedidoRepository {
         }
         return pedidos;
     }
-
 
     @Override
     public PedidoRequestDTO findById(Long idPedido) {
