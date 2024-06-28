@@ -3,13 +3,16 @@ package projeto.pizzaria.repository.JDBC;
 import org.springframework.stereotype.Repository;
 import projeto.pizzaria.model.ItemPedidoRequestDTO;
 import projeto.pizzaria.model.PedidoRequestDTO;
+import projeto.pizzaria.model.SaboresRequestDTO;
 import projeto.pizzaria.repository.PedidoRepository;
 import projeto.pizzaria.repository.ItemPedidoRepository;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class JdbcPedidoRepository implements PedidoRepository {
@@ -75,22 +78,67 @@ public class JdbcPedidoRepository implements PedidoRepository {
     @Override
     public List<PedidoRequestDTO> findAll() {
         List<PedidoRequestDTO> pedidos = new ArrayList<>();
-        String sql = "SELECT * FROM pedidos";
+        String sql = "SELECT " +
+                "pedidos.id_pedido, " +
+                "pedidos.id_cliente, " +
+                "pedidos.data_pedido, " +
+                "pedidos.status, " +
+                "pedidos.total, " +
+                "itens_pedido.id_item, " +
+                "itens_pedido.tipo, " +
+                "sabores.idsabor, " +
+                "sabores.sabor " +
+                "FROM pedidos " +
+                "INNER JOIN itens_pedido ON pedidos.id_pedido = itens_pedido.id_pedido " +
+                "INNER JOIN sabores ON itens_pedido.id_sabor = sabores.idsabor " +
+                "ORDER BY pedidos.id_pedido, itens_pedido.id_item";
+
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql);
              ResultSet resultSet = statement.executeQuery()) {
 
+            Map<Long, PedidoRequestDTO> pedidosMap = new LinkedHashMap<>(); // Usando um LinkedHashMap para manter a ordem de inserção
+
             while (resultSet.next()) {
-                PedidoRequestDTO pedido = mapResultSetToPedido(resultSet);
-                pedido.setIdCliente(resultSet.getLong("idCliente"));
-                pedido.setItensPedido(itemPedidoRepository.findByPedidoId(pedido.getIdPedido()));
-                pedidos.add(pedido);
+                Long idPedido = resultSet.getLong("id_pedido");
+
+                PedidoRequestDTO pedido = pedidosMap.get(idPedido);
+                if (pedido == null) {
+                    pedido = new PedidoRequestDTO();
+                    pedido.setIdPedido(idPedido);
+                    pedido.setIdCliente(resultSet.getLong("id_cliente"));
+                    pedido.setDataPedido(resultSet.getTimestamp("data_pedido").toLocalDateTime());
+                    pedido.setStatus(resultSet.getString("status"));
+                    pedido.setTotal(resultSet.getBigDecimal("total"));
+                    pedido.setItensPedido(new ArrayList<>());
+                    pedidosMap.put(idPedido, pedido);
+                }
+
+                // Somente adiciona o total na primeira vez que encontra o pedido
+                if (pedido.getItensPedido().isEmpty()) {
+                    pedido.setTotal(resultSet.getBigDecimal("total"));
+                }
+
+                ItemPedidoRequestDTO itemPedido = new ItemPedidoRequestDTO();
+                itemPedido.setIdItem(resultSet.getLong("id_item"));
+                itemPedido.setTipo(resultSet.getString("tipo"));
+
+                SaboresRequestDTO sabor = new SaboresRequestDTO();
+                sabor.setIdsabor(resultSet.getLong("idsabor"));
+                sabor.setSabor(resultSet.getString("sabor"));
+                itemPedido.setSabor(sabor);
+
+                pedido.getItensPedido().add(itemPedido);
             }
+
+            pedidos.addAll(pedidosMap.values());
+
         } catch (SQLException e) {
             throw new IllegalStateException("Erro ao listar pedidos.", e);
         }
         return pedidos;
     }
+
 
     @Override
     public PedidoRequestDTO findById(Long idPedido) {
