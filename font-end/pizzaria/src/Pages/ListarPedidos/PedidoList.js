@@ -5,10 +5,21 @@ import './PedidoList.css';
 const PedidoList = () => {
     const [pedidos, setPedidos] = useState([]);
     const [erro, setErro] = useState(null);
+    const [totalPedidos, setTotalPedidos] = useState(0);
 
     useEffect(() => {
         fetchPedidos();
     }, []);
+
+    useEffect(() => {
+        // Calcula o total de pedidos
+        const total = pedidos.reduce((acc, pedido) => acc + pedido.total, 0);
+        setTotalPedidos(total);
+    }, [pedidos]);
+
+    const formatarValorBRL = (valor) => {
+        return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    };
 
     const fetchPedidos = async () => {
         try {
@@ -52,7 +63,7 @@ const PedidoList = () => {
                             <td>{pedido.account ? pedido.account.numero : '-'}</td>
                             <td>{new Date(pedido.dataPedido).toLocaleString()}</td>
                             <td>{pedido.status}</td>
-                            <td>{pedido.total}</td>
+                            <td>{formatarValorBRL(pedido.total)}</td>
                             <td>
                                 <ul>
                                     {pedido.itensPedido.map((item, index) => (
@@ -67,6 +78,11 @@ const PedidoList = () => {
                         </tr>
                     ))}
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td colSpan="11" className="footer-total">Valor Total: <strong>{formatarValorBRL(totalPedidos)}</strong></td>
+                    </tr>
+                </tfoot>
             </table>
         </div>
     );
