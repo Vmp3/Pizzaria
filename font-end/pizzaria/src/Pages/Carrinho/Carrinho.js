@@ -52,7 +52,7 @@ const Carrinho = () => {
       });
 
       const pedido = {
-        idCliente: userId,
+        idCliente: userId,  
         dataPedido: new Date().toISOString(),
         status: 'PENDENTE',
         total: calcularTotal(),

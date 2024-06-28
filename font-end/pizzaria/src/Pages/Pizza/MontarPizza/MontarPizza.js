@@ -114,7 +114,7 @@ function MontarPizza() {
       {erro && <p className="error-message">{erro}</p>}
       {mensagem && <p className="mensagem">{mensagem}</p>}
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className="form-group">
           <label>Tamanho:  </label>
           <select value={tamanho} onChange={handleTamanhoChange} required>
             <option value="">Selecione o tamanho</option>
@@ -124,7 +124,7 @@ function MontarPizza() {
           </select>
         </div>
         {tamanho && (
-          <div>
+          <div className="form-group">
             <label>Número de sabores (1 ou 2):  </label>
             <select value={numSabores} onChange={handleNumSaboresChange} required>
               <option value="">Selecione o número de sabores</option>
@@ -135,9 +135,9 @@ function MontarPizza() {
           </div>
         )}
         {tamanho && numSabores > 0 && (
-          <div>
+          <div className="form-group">
             {Array.from({ length: numSabores }, (_, index) => (
-              <div key={index}>
+              <div key={index} className="form-group">
                 <label>{`Sabor ${index + 1}:  `}</label>
                 <select value={sabores[index]?.id || ''} onChange={(e) => handleSaborChange(index, e)} required>
                   <option value="">Selecione o sabor  </option>
@@ -149,7 +149,7 @@ function MontarPizza() {
             ))}
           </div>
         )}
-        <button type="submit">Enviar Carrinho</button>
+        <button className='add' type="submit">Adicionar ao carrinho</button>
       </form>
       
       {showDialog && (
