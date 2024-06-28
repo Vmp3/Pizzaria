@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './MontarPizza.css';
+import CustomButton from "../../../Util/CustomButton";
 
 function MontarPizza() {
   const [tamanho, setTamanho] = useState('');
@@ -149,15 +150,20 @@ function MontarPizza() {
             ))}
           </div>
         )}
-        <button className='add' type="submit">Adicionar ao carrinho</button>
+        <CustomButton
+          text="Adicionar ao carrinho"
+          onClick={handleSubmit}
+          styleType="add"
+          backgroundColor="#FFA500"  // Cor do botão
+        />
       </form>
       
       {showDialog && (
         <div className="dialog-overlay">
           <div className="dialog-box">
             <p>Pizza adicionada ao carrinho!</p>
-            <button onClick={handleMontarOutraPizza}>Montar outra pizza</button>
-            <button onClick={handleIrParaCarrinho}>Ir para o carrinho</button>
+            <CustomButton text="Montar outra pizza" onClick={handleMontarOutraPizza} />
+            <CustomButton text="Ir para o carrinho" onClick={handleIrParaCarrinho} />
           </div>
         </div>
       )}

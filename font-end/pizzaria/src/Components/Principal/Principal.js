@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./Principal.css";
+import CustomButton from "../../Util/CustomButton";
 
 const VideoBackground = () => {
   const videoRef = useRef(null);
@@ -30,18 +31,24 @@ const VideoBackground = () => {
 };
 
 const TextOverlay = ({ activeLink, handleSetActive }) => {
+  const navigate = useNavigate();  // useNavigate hook para navegação
+
+  const handleButtonClick = () => {
+    handleSetActive("montar-pizza");
+    navigate("/montar-pizza");  // Navegação ao clicar no botão
+  };
+
   return (
     <div className="text-overlay">
       <p className="welcome">Welcome</p>
       <h2>Bem-vindo à nossa pizzaria!</h2>
       <p>Não perca essa chance de ter um belo jantar! Realize seu carrinho abaixo</p>
-      <Link
-        to="/montar-pizza"
-        className={`montar-pizza-button ${activeLink === "montar-pizza" ? "active" : ""}`}
-        onClick={() => handleSetActive("montar-pizza")}
-      >
-        Fazer pedido
-      </Link>
+      <CustomButton
+        text="Fazer pedido"
+        onClick={handleButtonClick}
+        styleType={activeLink === "montar-pizza" ? "active" : ""}
+        backgroundColor="#FFA500"  // Cor do botão
+      />
     </div>
   );
 };

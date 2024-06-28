@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './Carrinho.css';
-import CustomButton from '../../Util/CustomButton';
+import CustomButton from "../../Util/CustomButton";
 
 const Carrinho = () => {
   const [carrinho, setCarrinho] = useState([]);
@@ -52,7 +52,7 @@ const Carrinho = () => {
       });
 
       const pedido = {
-        idCliente: userId,  
+        idCliente: userId,
         dataPedido: new Date().toISOString(),
         status: 'PENDENTE',
         total: calcularTotal(),
@@ -70,7 +70,6 @@ const Carrinho = () => {
 
         navigate('/pedidoConcluido', { state: { total: calcularTotal(), transactionId, deliveryTime } });
       } else {
-        // Caso a resposta não tenha status 200, exibe mensagem de erro
         console.error('Erro ao finalizar pedido:', response);
         setErro('Erro ao finalizar pedido: A resposta do servidor não foi bem sucedida.');
       }
@@ -99,7 +98,11 @@ const Carrinho = () => {
                 <p key={saborIndex}>Sabor {saborIndex + 1}: {sabor.sabor} ({sabor.tipo})</p>
               ))}
               <p>Valor: {typeof item.valor === 'number' ? `R$ ${item.valor.toFixed(2)}` : 'Valor indisponível'}</p>
-              <button onClick={() => handleRemoverPizza(index)}>Remover</button>
+              <CustomButton
+                onClick={() => handleRemoverPizza(index)}
+                text="Remover"
+                styleType="remove"
+              />
             </div>
           ))}
         </div>
