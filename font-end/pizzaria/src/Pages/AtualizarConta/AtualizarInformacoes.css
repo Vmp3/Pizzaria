@@ -4,10 +4,8 @@
     align-items: center;
     padding: 2rem;
 }
-.logout-button {
 
-    top: 10px; /* Distância do topo */
-    right: 10px; /* Distância da direita */
+.logout-button {
     cursor: pointer;
     background: none;
     border: none;
@@ -15,6 +13,7 @@
     display: flex;
     align-items: center;
 }
+
 .editar-dados-usuario-form {
     display: flex;
     flex-direction: column;
@@ -22,15 +21,16 @@
     width: 100%;
     max-width: 400px;
 }
+
 .logout-button:hover::after {
     content: "Sair da conta";
     background-color: rgba(0, 0, 0, 0.8);
     color: white;
     padding: 5px;
     border-radius: 5px;
-    font-size: 12px;
-    white-space: nowrap;
+    font-size: 12px;    
 }
+
 .custom-input {
     margin-bottom: 10px;
     padding: 8px;
