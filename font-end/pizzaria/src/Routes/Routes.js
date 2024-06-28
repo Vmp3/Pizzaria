@@ -10,6 +10,7 @@ import LayoutListarPizza from './Layout/LayoutListarPizza';
 import LayoutMontarPizza from "../Layout/LayoutMontarPizza";
 import LayoutConcluido from "../Layout/LayoutPedidoConcluido";
 import AtualizarInformacoes from "../Layout/LayoutAtualizarInformacoes"
+import PedidosList from "../Layout/LayoutPedidosList";
 
 function Routes() {
   return (
@@ -51,6 +52,11 @@ function Routes() {
         <Route path="/atualizarInformacoes">
           <Layout>
             <AtualizarInformacoes />
+          </Layout>
+        </Route>
+        <Route path="/listarPedidos">
+          <Layout>
+            <PedidosList />
           </Layout>
         </Route>
       </Switch>

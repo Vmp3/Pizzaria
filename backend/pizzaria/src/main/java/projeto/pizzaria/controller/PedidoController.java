@@ -33,9 +33,14 @@ public class PedidoController {
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<List<PedidoRequestDTO>> listarPedidos() {
-        List<PedidoRequestDTO> pedidos = pedidoService.listarPedidos();
-        return ResponseEntity.ok(pedidos);
+    public ResponseEntity<?> listarPedidos() {
+        try {
+            List<PedidoRequestDTO> pedidos = pedidoService.listarPedidos();
+            return ResponseEntity.ok(pedidos);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erro ao listar pedidos: " + e.getMessage());
+        }
     }
 
     @DeleteMapping("/remover/{id}")

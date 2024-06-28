@@ -14,6 +14,7 @@ import Carrinho from "./Layout/LayoutCarrinho";
 import PedidoConcluido from "./Pages/Carrinho/PedidoConcluido/PedidoConcluido";
 import LayoutAtualizarInformacoes from "./Layout/LayoutAtualizarInformacoes"
 import { scroller } from "react-scroll";
+import PedidosList from "./Layout/LayoutPedidosList";
 
 const ScrollToSection = () => {
   const location = useLocation();
@@ -84,6 +85,7 @@ function App() {
             <Route path="/carrinho" element={<Carrinho />} />
             <Route path="/pedidoConcluido" element={<PedidoConcluido />} />
             <Route path="/atualizarInformacoes" element={<LayoutAtualizarInformacoes />} />
+            <Route path="/listarPedidos" element={<PedidosList />} />
           </Routes>
         </div>
       </Router>

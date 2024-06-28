@@ -17,6 +17,10 @@ public class PedidoRequestDTO {
     @Column(name = "id_cliente")
     private Long idCliente;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_cliente", referencedColumnName = "id", insertable = false, updatable = false)
+    private AccountRequestDTO account;
+
     @Column(name = "data_pedido")
     private LocalDateTime dataPedido;
 
@@ -43,6 +47,14 @@ public class PedidoRequestDTO {
 
     public void setIdCliente(Long idCliente) {
         this.idCliente = idCliente;
+    }
+
+    public AccountRequestDTO getAccount() {
+        return account;
+    }
+
+    public void setAccount(AccountRequestDTO account) {
+        this.account = account;
     }
 
     public LocalDateTime getDataPedido() {

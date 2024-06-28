@@ -49,4 +49,8 @@ public class SaboresService {
         saboresRepository.update(existingSabor);
         return "Sabor de pizza atualizado com sucesso!";
     }
+
+    public SaboresRequestDTO buscarSaborPorId(Long id) {
+        return saboresRepository.findById(id);
+    }
 }

@@ -53,4 +53,18 @@ public class SaboresController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao atualizar sabor de pizza: " + e.getMessage());
         }
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<SaboresRequestDTO> buscarSabor(@PathVariable Long id) {
+        try {
+            SaboresRequestDTO sabor = saboresService.buscarSaborPorId(id);
+            if (sabor != null) {
+                return ResponseEntity.ok(sabor);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
 }
