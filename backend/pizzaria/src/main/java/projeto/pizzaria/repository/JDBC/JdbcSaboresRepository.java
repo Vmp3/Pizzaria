@@ -49,19 +49,43 @@ public class JdbcSaboresRepository implements SaboresRepository {
              PreparedStatement statement = connection.prepareStatement(sql);
              ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
-                SaboresRequestDTO sabor = new SaboresRequestDTO();
-                sabor.setIdsabor(resultSet.getLong("idsabor"));
-                sabor.setSabor(resultSet.getString("sabor"));
-                sabor.setDescricao(resultSet.getString("descricao"));
-                sabor.setValor(resultSet.getBigDecimal("valor"));
-                sabor.setTamanho(resultSet.getString("tamanho"));
-                sabor.setImagem(resultSet.getString("imagem"));
-                sabores.add(sabor);
+                SaboresRequestDTO saborDTO = new SaboresRequestDTO();
+                saborDTO.setIdsabor(resultSet.getLong("idsabor"));
+                saborDTO.setSabor(resultSet.getString("sabor"));
+                saborDTO.setDescricao(resultSet.getString("descricao"));
+                saborDTO.setValor(resultSet.getBigDecimal("valor"));
+                saborDTO.setTamanho(resultSet.getString("tamanho"));
+                saborDTO.setImagem(resultSet.getString("imagem"));
+                sabores.add(saborDTO);
             }
         } catch (SQLException e) {
             throw new IllegalStateException("Erro ao listar sabores de pizza.", e);
         }
         return sabores;
+    }
+
+    @Override
+    public SaboresRequestDTO findById(Long id) {
+        String sql = "SELECT * FROM sabores WHERE idsabor = ?";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                SaboresRequestDTO saborDTO = new SaboresRequestDTO();
+                saborDTO.setIdsabor(resultSet.getLong("idsabor"));
+                saborDTO.setSabor(resultSet.getString("sabor"));
+                saborDTO.setDescricao(resultSet.getString("descricao"));
+                saborDTO.setValor(resultSet.getBigDecimal("valor"));
+                saborDTO.setTamanho(resultSet.getString("tamanho"));
+                saborDTO.setImagem(resultSet.getString("imagem"));
+                return saborDTO;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            throw new IllegalStateException("Erro ao buscar sabor de pizza por ID.", e);
+        }
     }
 
     @Override
@@ -79,29 +103,5 @@ public class JdbcSaboresRepository implements SaboresRepository {
         } catch (SQLException e) {
             throw new IllegalStateException("Erro ao atualizar sabor de pizza.", e);
         }
-    }
-
-    @Override
-    public SaboresRequestDTO findById(Long id) {
-        String sql = "SELECT * FROM sabores WHERE idsabor = ?";
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setLong(1, id);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    SaboresRequestDTO sabor = new SaboresRequestDTO();
-                    sabor.setIdsabor(resultSet.getLong("idsabor"));
-                    sabor.setSabor(resultSet.getString("sabor"));
-                    sabor.setDescricao(resultSet.getString("descricao"));
-                    sabor.setValor(resultSet.getBigDecimal("valor"));
-                    sabor.setTamanho(resultSet.getString("tamanho"));
-                    sabor.setImagem(resultSet.getString("imagem"));
-                    return sabor;
-                }
-            }
-        } catch (SQLException e) {
-            throw new IllegalStateException("Erro ao buscar sabor de pizza por ID.", e);
-        }
-        return null;
     }
 }
