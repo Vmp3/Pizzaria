@@ -7,16 +7,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import projeto.pizzaria.model.AccountRequestDTO;
 import projeto.pizzaria.model.LoginRequestDTO;
-import projeto.pizzaria.repository.AccountRepository;
+import projeto.pizzaria.service.AccountService;
 
 @CrossOrigin(origins = "*")
 @RestController
 public class AccountController {
 
-    private final AccountRepository accountRepository;
+    private final AccountService accountService;
 
-    public AccountController(AccountRepository accountRepository) {
-        this.accountRepository = accountRepository;
+    public AccountController(AccountService accountService) {
+        this.accountService = accountService;
     }
 
     private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
@@ -24,18 +24,8 @@ public class AccountController {
     @PostMapping("/criar-conta")
     public ResponseEntity<?> criarConta(@RequestBody AccountRequestDTO requestDTO) {
         try {
-
-            if (accountRepository.cpfExists(requestDTO.getCpf())) {
-                return ResponseEntity.badRequest().body("CPF já está cadastrado.");
-            }
-
-            if (accountRepository.emailExists(requestDTO.getEmail())) {
-                return ResponseEntity.badRequest().body("Email já está cadastrado.");
-            }
-
-            accountRepository.save(requestDTO);
-            return ResponseEntity.ok("Conta criada com sucesso!");
-
+            String mensagem = accountService.criarConta(requestDTO);
+            return ResponseEntity.ok(mensagem);
         } catch (IllegalStateException e) {
             return ResponseEntity.badRequest().body("Erro ao criar conta: " + e.getMessage());
         }
@@ -44,27 +34,20 @@ public class AccountController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDTO requestDTO) {
         try {
-            Long userId = accountRepository.getUserIdByCredentials(requestDTO.getCpf(), requestDTO.getSenha());
-            if (userId != null) {
-                return ResponseEntity.ok(userId);
-            } else {
-                return ResponseEntity.status(401).body("Credenciais inválidas.");
-            }
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("Erro ao realizar login: " + e.getMessage());
+            Long userId = accountService.login(requestDTO);
+            return ResponseEntity.ok(userId);
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(401).body("Erro ao realizar login: " + e.getMessage());
         }
     }
 
     @GetMapping("/usuarios/{id}")
     public ResponseEntity<?> buscarUsuarioPorId(@PathVariable Long id) {
         try {
-            AccountRequestDTO usuario = accountRepository.findById(id);
-            if (usuario == null) {
-                return ResponseEntity.notFound().build();
-            }
+            AccountRequestDTO usuario = accountService.buscarUsuarioPorId(id);
             return ResponseEntity.ok(usuario);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao buscar usuário: " + e.getMessage());
+        } catch (IllegalStateException e) {
+            return ResponseEntity.notFound().build();
         }
     }
 
@@ -72,37 +55,12 @@ public class AccountController {
     public ResponseEntity<?> editarUsuario(@PathVariable Long userId, @RequestBody AccountRequestDTO requestDTO) {
         try {
             logger.info("Editando usuário com ID: {}", userId);
-
-            AccountRequestDTO usuarioExistente = accountRepository.findById(userId);
-            if (usuarioExistente == null) {
-                logger.warn("Usuário com ID {} não encontrado.", userId);
-                return ResponseEntity.notFound().build();
-            }
-
-            // Verificar se o email está sendo modificado
-            if (!usuarioExistente.getEmail().equals(requestDTO.getEmail())) {
-                return ResponseEntity.badRequest().body("Não é permitido alterar o email do usuário.");
-            }
-
-            // Atualiza os campos que podem ser modificados
-            usuarioExistente.setCep(requestDTO.getCep());
-            usuarioExistente.setEndereco(requestDTO.getEndereco());
-            usuarioExistente.setNumero(requestDTO.getNumero());
-
-            logger.info("Dados do usuário antes da atualização: {}", usuarioExistente);
-
-            accountRepository.update(usuarioExistente);
-
-            logger.info("Usuário atualizado com sucesso!");
-
-            return ResponseEntity.ok("Usuário atualizado com sucesso!");
-        } catch (Exception e) {
+            String mensagem = accountService.editarUsuario(userId, requestDTO);
+            logger.info(mensagem);
+            return ResponseEntity.ok(mensagem);
+        } catch (IllegalStateException e) {
             logger.error("Erro ao atualizar usuário", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao atualizar usuário: " + e.getMessage());
         }
     }
-
-
-
-
 }

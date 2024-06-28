@@ -32,7 +32,7 @@ const Carrinho = () => {
     }
 
     if (!userId) {
-      setErro('Cliente não especificado para o pedido, realize seu login.');
+      setErro('Para finalizar o pedido, faça seu login.');
       return;
     }
 
