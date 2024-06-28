@@ -9,7 +9,7 @@
 .video-container {
   position: relative;
   width: 100%;
-  height: 85vh;
+  height: 100vh;
 }
 
 .fullscreen-video {
@@ -59,14 +59,21 @@
   font-style: normal;
   margin-bottom: 0;
   opacity: 1;
-<<<<<<< HEAD
 }
 
+.montar-pizza-button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: orange;
+  color: white;
+  text-decoration: none;
+  font-size: 1.5em;
+  font-family: var(--font-signika-negative);
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
 
-@media (max-width: 1080px) {
- .video-container {
-  height: 90vh;
- }
-=======
->>>>>>> development
+.montar-pizza-button:hover {
+  background-color: darkorange;
 }

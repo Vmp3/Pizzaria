@@ -8,6 +8,8 @@ import Layout from './Layout/Layout';
 import LayoutCriarPizza from './Layout/LayoutCriarPizza';
 import LayoutListarPizza from './Layout/LayoutListarPizza';
 import LayoutMontarPizza from "../Layout/LayoutMontarPizza";
+import LayoutConcluido from "../Layout/LayoutPedidoConcluido";
+import AtualizarInformacoes from "../Layout/LayoutAtualizarInformacoes"
 
 function Routes() {
   return (
@@ -39,6 +41,16 @@ function Routes() {
         <Route path="/montar-pizza">
           <Layout>
             <LayoutMontarPizza />
+          </Layout>
+        </Route>
+        <Route path="/pedidoConcluido">
+          <Layout>
+            <LayoutConcluido />
+          </Layout>
+        </Route>
+        <Route path="/atualizarInformacoes">
+          <Layout>
+            <AtualizarInformacoes />
           </Layout>
         </Route>
       </Switch>

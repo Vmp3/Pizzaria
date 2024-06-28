@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Login.css";
 import { formatCPF } from "../../Util/Utils";
@@ -9,6 +10,7 @@ function Login() {
   const [cpf, setCpf] = useState("");
   const [senha, setSenha] = useState("");
   const [mensagem, setMensagem] = useState("");
+  const navigate = useNavigate();
 
   const handleCpfChange = (event) => {
     const formattedCpf = formatCPF(event.target.value);
@@ -22,8 +24,15 @@ function Login() {
         cpf,
         senha,
       });
-      console.log(response.data);
-      setMensagem("Login realizado com sucesso!");
+
+      if (response.status === 200) {
+        const userId = response.data;
+        localStorage.setItem('userId', userId);
+        setMensagem("Login realizado com sucesso!");
+        navigate("/home");
+      } else {
+        setMensagem("Erro ao fazer login.");
+      }
     } catch (error) {
       console.error("Erro ao fazer login:", error);
       if (error.response) {
@@ -56,7 +65,7 @@ function Login() {
           onChange={(e) => setSenha(e.target.value)}
           required
         />
-        <CustomButton text="Login"/>
+        <CustomButton text="Login" />
       </form>
       <p className="mensagem">{mensagem}</p>
     </div>

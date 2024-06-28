@@ -1,5 +1,5 @@
 .background-container {
-  background-image: url('landing-bg.270db7f8775652679ffe.webp');
+  background-image: url('../../../../public/landing-bg.270db7f8775652679ffe.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -64,6 +64,14 @@
 
 .pizza-description {
   padding: 0 10px;
+  color: #ccc;
+}
+
+.pizza-valor {
+  color: #ccc;
+}
+
+.pizza-tamanho {
   color: #ccc;
 }
 

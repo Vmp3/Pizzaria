@@ -9,10 +9,10 @@ function ListarPizzas() {
   useEffect(() => {
     const fetchPizzas = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/pizzas/listar');
+        const response = await axios.get('http://localhost:8080/sabores/listar');
         setPizzas(response.data);
       } catch (error) {
-        setErro('Erro ao buscar pizzas: ' + error.message);
+        setErro('Erro ao buscar sabores: ' + error.message);
       }
     };
 
@@ -26,12 +26,14 @@ function ListarPizzas() {
         {erro && <p className="error-message">{erro}</p>}
         <div className="grid">
           {pizzas.map((pizza) => (
-            <div key={pizza.id} className="grid-item">
+            <div key={pizza.idsabor} className="grid-item">
               <div className="pizza-image-container">
-                {pizza.imagem && <img src={pizza.imagem} alt={pizza.titulo} className="pizza-image" />}
+                {pizza.imagem && <img src={pizza.imagem} alt={pizza.sabor} className="pizza-image" />}
               </div>
-              <h3 className="pizza-subtitle">{pizza.titulo}</h3>
+              <h3 className="pizza-subtitle">{pizza.sabor}</h3>
               <p className="pizza-description">{pizza.descricao}</p>
+              <p className="pizza-valor">Valor: R$ {pizza.valor.toFixed(2)}</p>
+              <p className="pizza-tamanho">Tamanho: {pizza.tamanho}</p>
             </div>
           ))}
         </div>

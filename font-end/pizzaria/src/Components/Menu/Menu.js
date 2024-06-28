@@ -11,6 +11,8 @@ const Menu = () => {
         <div className="header-left">
           <Logo />
           <Title />
+        </div>
+        <div className="header-right">
           <NavigationLinks />
         </div>
       </header>
