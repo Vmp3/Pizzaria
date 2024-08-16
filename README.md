@@ -4,8 +4,7 @@ Bem-vindo ao projeto do site da pizzaria! Este é um aplicativo web que permite 
 
 - **Frontend**: React
 - **Backend**: Java com Spring Boot
-- **Banco de Dados**: (Aqui você pode adicionar o banco de dados que está usando, se aplicável)
-- **Outras Ferramentas**: (Aqui você pode listar outras ferramentas ou bibliotecas, como Redux, Axios, etc.)
+- **Banco de dados**: MySQL
 
 ## Funcionalidades
 
